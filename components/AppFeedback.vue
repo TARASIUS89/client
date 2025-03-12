@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-const token = '7220005627:AAESDk0AMrySvgYUWPg6LBS5_F5_Fu5UA6A';
-const chatId = "-1002469163817";
+const token = '7605231803:AAHesk57rNvu8VcHGugwZbWqv_RzttfbQqI';
+const chatId = "160236196";
 
 const formName = ref('');
 const formEmail = ref('');
