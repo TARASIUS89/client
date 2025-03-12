@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+#markdown pre {
+    @apply bg-amber-100 border border-amber-400 rounded-lg p-5 mx-5
+}
+
+.page-enter-active,
+.page-leave-active {
+  @apply transition-all
+}
+
+.page-enter-from,
+.page-leave-to {
+  @apply  blur-lg translate-y-full
+}
+
+.markdown h1 {
+  @apply text-4xl  font-medium py-1.5
+}
+
+.markdown h2 {
+  @apply text-3xl font-medium py-1.5
+}
+
+.markdown h3 {
+  @apply text-2xl font-medium py-1.5
+}
+
+.markdown p {
+  @apply text-base py-1.5
+}
+
+.markdown ul {
+  @apply list-disc my-1.5 pl-6;
+}
+
+.markdown ol {
+  @apply list-decimal my-1.5 pl-6;
+}
