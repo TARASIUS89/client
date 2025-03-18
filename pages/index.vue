@@ -3,8 +3,8 @@
   <section class="flex flex-col lg:flex-row items-center gap-24">
     <!-- левая сторона -->
     <div class="flex flex-col gap-4 text-black dark:text-white">
-      <h1 class="text-5xl font-medium uppercase">Самый <span class="text-blue-700 text-6xl font-bold ">космические</span> рецепты от Шефа</h1>
-      <p class="text-2xl">Вдохновляйтесь кулинарными шедеврами от профессионального шеф-повара и создавайте настоящие кулинарные произведения искусства на своей кухне!</p>
+      <h1 class="text-5xl font-medium uppercase">LEBO <span class="text-yellow-900 text-6xl font-bold ">GOLD  </span> ARABICA</h1>
+      <p class="text-2xl">Открой для себя истинную роскош LEBO GOLD.Аромат зёрен Арабики,пикантные нотки черной смородины и молочного шоколада!</p>
     </div>
     <!-- правая сторона -->
     <div class="grid grid-cols-2 grid-rows-2 items-center gap-8">
@@ -19,11 +19,11 @@
 
   <!-- второй блок -->
   <section class="text-black dark:text-white">
-    <h2 class="my-1.5 text-3xl font-medium uppercase">Популярные статьи</h2>
+    <h2 class="my-1.5 text-3xl font-medium uppercase">Каталог LEBO</h2>
     <nav class="my-3">
       <ul class="flex gap-4">
-        <li v-for="item in 10">
-          <NuxtLink to="/">Дома и быт</NuxtLink>
+        <li v-for="item in 24">
+          <NuxtLink to="/">LEBO</NuxtLink>
         </li>
       </ul>
     </nav>

@@ -4,7 +4,7 @@
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <NuxtLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="~/public/favicon.ico" class="h-8" alt="Flowbite Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Секреты Шефа</span>
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LEBO coffee</span>
                 </NuxtLink>
                 <div class="flex md:order-2">
                     <button @click="menuOpen = !menuOpen" type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
@@ -31,34 +31,7 @@
                         </div>
                         <input v-model="search" type="search" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Поиск...">
                     </div>
-                    <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <NuxtLink to="/" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:p-0 md:text-black dark:md:text-white"  aria-current="page"
-                            :class="{ 'md:text-blue-700 md:dark:text-blue-500': route.path == '/' }"
-                            @click="menuOpen = false">Главная</NuxtLink>
-                        </li>
-                        <li>
-                            <NuxtLink to="/blog" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            :class="{ 'md:text-blue-700 md:dark:text-blue-500': route.path == '/blog' }"
-                            @click="menuOpen = false">Блог</NuxtLink>
-                        </li>
-                        <li>
-                            <NuxtLink to="/about" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            :class="{ 'md:text-blue-700 md:dark:text-blue-500': route.path == '/about' }"
-                            @click="menuOpen = false">О нас</NuxtLink>
-                        </li>
-                        <li>
-                            <NuxtLink to="/contact" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            :class="{ 'md:text-blue-700 md:dark:text-blue-500': route.path == '/contact' }"
-                            @click="menuOpen = false">Контакты</NuxtLink>
-                        </li>
-                        <!-- кнопка с темой -->
-                        <li>
-                            <button @click="toggleTheme" class="dark:text-white underline rounded">
-                                {{ isDark ? 'Светлая тема' : 'Темная тема' }}
-                            </button>
-                        </li>
-                    </ul>
+                    <AppNavbar />
                 </div>
             </div>
         </nav>
