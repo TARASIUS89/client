@@ -1,4 +1,5 @@
 <template>
+    <!--компонент профиля из навигации-->
     <button @click="profileToggle = !profileToggle" class="cursor-pointer">
         <img v-if="false" id="avatarButton" type="button" class="size-7 rounded-full"
             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
@@ -11,8 +12,8 @@
         class="absolute z-10 p-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
         <div v-if="false">
             <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                <div>Олег Нуржанов</div>
-                <div class="font-medium truncate">olegnastyle@yandex.ru</div>
+                <div>Ваш менеджер</div>
+                <div class="font-medium truncate">pulse_sport@mail.ru</div>
             </div>
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                 <li>

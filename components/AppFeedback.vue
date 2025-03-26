@@ -1,4 +1,5 @@
 <template>
+  <!--компонент формы обратной связи-->
   <form @submit.prevent="submitForm" class="flex flex-col gap-2 max-w-md my-4">
       <div> 
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ваше имя</label>
@@ -17,8 +18,8 @@
 </template>
 
 <script setup>
-const token = '7220005627:AAESDk0AMrySvgYUWPg6LBS5_F5_Fu5UA6A';
-const chatId = "-1002469163817";
+const token = '7605231803:AAHesk57rNvu8VcHGugwZbWqv_RzttfbQqI';
+const chatId = "160236196";
 
 const formName = ref('');
 const formEmail = ref('');
