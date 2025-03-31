@@ -38,22 +38,49 @@
     
     <script setup>
     const userForma = ref({})
-    
-    const registr = async () => {
-      try {
-          await $fetch(`https://908bd2082661.vps.myjino.ru/api/auth/local/register`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: {
-                "username": "id1",
-                "email": userForma.value.email,
-                "password": userForma.value.password
-              },
-          });
-      } catch (error) {
-          console.error('Ошибка при обновлении просмотров:', error);
+    const newID = ref(0)
+
+const fetchUsers = async () => {
+  try {
+    const response = await $fetch('http://localhost:1337/api/users?fields=username&sort=username:desc');
+    const lastUser  = response[0];
+
+    if (lastUser  && lastUser.username) {
+      const match = lastUser.username.match(/\d+/);
+      if (match) {
+        newID.value = match[0];
       }
     }
-    </script>
+  } catch (error) {
+    console.log(`Не вышло получить последний id пользователя: ${error}`);
+  }
+};
+    
+    const registr = async () => {
+  try {
+    await fetchUsers()
+
+    if (newID) {
+      const response = await $fetch(`http://localhost:1337/api/auth/local/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          "username": `id${+newID.value + 1}`,
+          "email": userForma.value.email,
+          "password": userForma.value.password
+        },
+      });
+
+      const data = await response;
+      localStorage.setItem('jwt', data.jwt);
+    }
+
+  } catch (error) {
+      console.error('Ошибка при обновлении просмотров:', error);
+  } finally {
+    // index.authToggle = false;
+  }
+}
+</script>

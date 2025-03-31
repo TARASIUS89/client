@@ -1,5 +1,5 @@
 <template>
-    <h1 class="my-4 text-2xl text-blue-700 darl:blue-500 font-medium">Блог</h1>
+    <h1 class="my-4 text-2xl text-blue-700 darl:blue-500 font-medium">{{id}}</h1>
     <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <article v-for="post in posts" :key="post.id" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <NuxtLink :to="`/${post.category?.slug}/${post.slug}`">
@@ -30,8 +30,8 @@ const fetch = async () => {
     try {
         // включаем loader
         index.loader = true;
-        const res = await $fetch(`http://localhost:1337/api/posts?filters[category][slug][$eqi]=${id}&populate=*`)
-        return posts.value = res.data   
+        const res = await $fetch(`http://localhost:1337/api/posts?populate=*&filters[categories][slug][$eqi]=${id}`)
+        return posts.value = res.data
     } catch (error) {
         console.log(error);
     } finally {

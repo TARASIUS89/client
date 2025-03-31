@@ -1,5 +1,5 @@
 <template>
-    <!--компонент профиля из навигации-->
+    <!-- компонент профиля из навигации -->
     <button @click="profileToggle = !profileToggle" class="cursor-pointer">
         <img v-if="false" id="avatarButton" type="button" class="size-7 rounded-full"
             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
@@ -10,24 +10,24 @@
     <!-- выпадающее меню -->
     <div id="userDropdown" v-if="profileToggle"
         class="absolute z-10 p-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-        <div v-if="false">
+        <div v-if="index.userMe.documentId">
             <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                <div>Ваш менеджер</div>
-                <div class="font-medium truncate">pulse_sport@mail.ru</div>
+                <!-- <div>Олег Нуржанов</div> -->
+                <div class="font-medium truncate">{{ index.userMe.email }}</div>
             </div>
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                 <li>
-                    <a href="#"
-                        class="block px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Профиль</a>
+                    <NuxtLink to="/profile"
+                        class="block px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Профиль</NuxtLink>
                 </li>
                 <li>
-                    <a href="#"
+                    <NuxtLink to="/profile"
                         class="block px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    Настройки</a>
+                    Настройки</NuxtLink>
                 </li>
             </ul>
             <div class="py-1">
-                <a href="#"
+                <a href="#" @click="index.logout"
                     class="block px-4 py-2 rounded text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                     Выйти    
                 </a>

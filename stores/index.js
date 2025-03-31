@@ -3,8 +3,57 @@ import { defineStore } from 'pinia'
 export const useIndexStore = defineStore('index', {
   state: () => {
     return {
-      loader: false,
-      search: '',
+      loader: false, // индикатор загрузки
+      search: '', // поисковая строка
+      authToggle: true, // переключитель состояния авторизации / регистрации
+      userMe: {},
     }
   },
+  actions: {
+    async fetchUserMe() {
+      try {
+        const token = localStorage.getItem('jwt')
+        const response = await fetch('http://localhost:3000//api/users/me',
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        )
+
+        const data = await response.json();
+        this.userMe = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    logout() {
+      localStorage.removeItem('jwt')
+      this.userMe = {}
+    },
+    async login(loginData) {
+      try {
+        const token = localStorage.getItem('jwt')
+        const response = await fetch('http://localhost:1337/api/auth/local',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Указываем тип контента
+          },
+       
+        body: JSON.stringify({
+          "identifier": loginData.email,
+          "password": loginData.password
+        }),
+      });
+  
+      const data = await response.json();
+      localStorage.setItem('jwt', data.jwt)
+      this.userMe = data.user
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  }
 })

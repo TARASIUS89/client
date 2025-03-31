@@ -36,6 +36,6 @@
 <script setup>
 const route = useRoute()
 useHead({
-    title: 'О нас | Академия ТОП'
+    title: 'О нас | Lebo'
 })
 </script>
