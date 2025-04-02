@@ -75,6 +75,7 @@ const fetchUsers = async () => {
 
       const data = await response;
       localStorage.setItem('jwt', data.jwt);
+      index.userMe = data;
     }
 
   } catch (error) {
