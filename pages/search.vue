@@ -1,5 +1,5 @@
 <template>
-    <h1 class="my-4 text-2xl text-blue-700 darl:blue-500 font-medium">
+    <h1 class="my-4 text-2xl text-cyan-700 darl:cyan-500 font-medium">
         Поиск <q>{{ index.search }}</q>
     </h1>
     <!-- все посты по запросу -->
