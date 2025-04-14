@@ -6,8 +6,8 @@
 
                 <!-- логотип -->
                 <NuxtLink to="/" class="flex items-center space-x-2 rtl:space-x-reverse">
-                    <img src="~/public/favicon.ico" class="h-7" alt="Coffee Lebo Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Coffee Lebo</span>
+                    <img src="~/public/favicon.ico" class="h-7" alt="LEBO Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">LEBO</span>
                 </NuxtLink>
 
                 <!-- мобильные иконки -->
@@ -27,7 +27,8 @@
 
                 <!-- десктопные элементы -->
                 <div class="hidden lg:flex lg:items-center lg:space-x-4 lg:order-2">
-                    
+                    <UiDarkToggle />
+                    <UiProfile />
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

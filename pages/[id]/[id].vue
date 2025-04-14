@@ -22,9 +22,12 @@
     return `${day} ${month} ${year}`;
   }
   
-  const { id } = useRoute().params;
+  const route = useRoute()
+  const { category, slug } = route.params
   const post = ref({});
   const index = useIndexStore();
+  
+  console.log(category, slug);
   
   import markdownit from 'markdown-it';
   const md = markdownit();
@@ -39,13 +42,13 @@
   const fetch = async () => {
     try {
         index.loader = true;
-        const res = await $fetch(`http://localhost:1337/api/posts?filters[slug][$eqi]=${id}&populate=*`);
+        const res = await $fetch(`http://localhost:1337/api/posts?filters[slug][$eqi]=${slug}&populate=*`);
         post.value = res.data[0];
         if (post.value) {
             updateViews(post.value.documentId);
             seo.value = res.data[0].seo;
             useSeoMeta({
-                title: `${seo.value.metaTitle} | Coffee Lebo`,
+                title: `${seo.value.metaTitle} | PlusPixel`,
                 description: seo.value.metaDescription,
                 ogTitle: seo.value.metaTitle,
                 ogDescription: seo.value.metaDescription,
@@ -60,7 +63,7 @@
   
   const updateViews = async (documentId) => {
     try {
-        await $fetch(`http://localhost:1337/api/posts/${id}`, {
+        await $fetch(`http://localhost:1337/api/posts/${documentId}`, {
             method: 'PUT',
             body: {
                 data: {

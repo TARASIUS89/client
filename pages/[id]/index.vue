@@ -1,44 +1,163 @@
 <template>
-    <h1 class="my-4 text-2xl text-blue-700 darl:blue-500 font-medium">{{id}}</h1>
-    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <article v-for="post in posts" :key="post.id" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <NuxtLink :to="`/${post.category?.slug}/${post.slug}`">
-                <img class="rounded-t-lg" :src="'http://localhost:1337'+post.cover.url" alt="" />
-            </NuxtLink>
-            <div class="p-5">
-                <NuxtLink :to="`/${post.category?.slug}/${post.slug}`">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5>
-                </NuxtLink>
-                <NuxtLink :to="`/${post.category?.slug}/${post.slug}`" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[brown]/80 rounded-lg hover:bg-[brown] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Подробнее
-                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                    </svg>
-                </NuxtLink>
-            </div>
-        </article>
+    <div class="max-w-3xl mx-auto text-black dark:text-white">
+        <h1 class="text-4xl font-medium my-2">{{ post.title }}</h1>
+        <p v-if="post" class="opacity-50 my-1.5">
+            <span>{{ post.body ? calculateReadingTime(post.body) : 0 }}</span> •
+            <span v-html="post.views || 0"></span>
+            прочитано • {{ convertDatetime(post.publishedAt) }}</p>
+        <div class="markdown my-1.5" v-html="body" ref="markdownContainer"></div>
     </div>
-</template>
-
-<script setup>
-const posts = ref([])
-const index = useIndexStore();
-
-const { id } = useRoute().params;
-
-const fetch = async () => {
+  </template>
+  
+  <script setup>
+  function convertDatetime(isoDatetime) {
+    const date = new Date(isoDatetime);
+    const months = [
+        "янв", "фев", "мар", "апр", "май", "июн",
+        "июл", "авг", "сен", "окт", "ноя", "дек"
+    ];
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = months[date.getUTCMonth()];
+    const year = date.getUTCFullYear();
+    return `${day} ${month} ${year}`;
+  }
+  
+  const route = useRoute()
+  const { category, slug } = route.params
+  const post = ref({});
+  const index = useIndexStore();
+  
+  console.log(category, slug);
+  
+  import markdownit from 'markdown-it';
+  const md = markdownit();
+  const body = ref();
+  
+  watch(post, (newPost) => {
+    body.value = md.render(newPost.body);
+  });
+  
+  const seo = ref({});
+  
+  const fetch = async () => {
     try {
-        // включаем loader
         index.loader = true;
-        const res = await $fetch(`http://localhost:1337/api/posts?populate=*&filters[categories][slug][$eqi]=${id}`)
-        return posts.value = res.data
+        const res = await $fetch(`https://localhost:1337/api/posts?filters[slug][$eqi]=${slug}&populate=*`);
+        post.value = res.data[0];
+        if (post.value) {
+            updateViews(post.value.documentId);
+            seo.value = res.data[0].seo;
+            useSeoMeta({
+                title: `${seo.value.metaTitle} | PlusPixel`,
+                description: seo.value.metaDescription,
+                ogTitle: seo.value.metaTitle,
+                ogDescription: seo.value.metaDescription,
+            });
+        }
     } catch (error) {
         console.log(error);
     } finally {
-        // выключаем loader
         index.loader = false;
     }
-}
-
-onMounted(() => fetch())
-</script>
+  };
+  
+  const updateViews = async (documentId) => {
+    try {
+        await $fetch(`https://http://localhost:1337/api/posts/${documentId}`, {
+            method: 'PUT',
+            body: {
+                data: {
+                    views: (post.value.views || 0) + 1,
+                },
+            },
+        });
+    } catch (error) {
+        console.error('Ошибка при обновлении просмотров:', error);
+    }
+  };
+  
+  function calculateReadingTime(text, wordsPerMinute = 200) {
+    const words = text.trim().split(/\s+/).length;
+    const readingTime = Math.ceil(words / wordsPerMinute);
+    if (readingTime === 1) {
+        return `${readingTime} минута`;
+    } else if (readingTime > 1 && readingTime < 5) {
+        return `${readingTime} минуты`;
+    } else {
+        return `${readingTime} минут`;
+    }
+  }
+  
+  onMounted(() => fetch());
+  
+  // Функция для копирования текста в буфер обмена
+  const copyToClipboard = async (text, event) => {
+      if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+          console.error('Clipboard API не поддерживается в текущей среде');
+          return;
+      }
+  
+      try {
+          await navigator.clipboard.writeText(text);
+          showCopiedNotification(event);
+      } catch (error) {
+          console.error('Не удалось скопировать текст:', error);
+      }
+  };
+  
+  // Функция для показа уведомления "Скопировано"
+  const showCopiedNotification = (event) => {
+    const notification = document.createElement('span');
+    notification.textContent = 'Скопировано';
+    notification.className =
+        'absolute bg-cyan-500 text-white text-xs px-2 py-1 rounded-md shadow-md pointer-events-none';
+  
+    const rect = event.target.getBoundingClientRect();
+    notification.style.top = `${rect.top + window.scrollY}px`;
+    notification.style.left = `${rect.right + window.scrollX + 8}px`;
+  
+    document.body.appendChild(notification);
+  
+    setTimeout(() => {
+        notification.remove();
+    }, 1000);
+  };
+  
+  // Обработчик кликов на уровне документа
+  const handleDocumentClick = (event) => {
+    if (event.target.tagName === 'CODE' || event.target.tagName === 'PRE') {
+        const codeText = event.target.textContent;
+        copyToClipboard(codeText, event);
+    }
+  };
+  
+  // Отслеживание изменений DOM с помощью MutationObserver
+  let observer;
+  onMounted(() => {
+    document.addEventListener('click', handleDocumentClick);
+  
+    observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE && (node.querySelector('code') || node.querySelector('pre'))) {
+                    console.log('Новый тег <code> или <pre> обнаружен');
+                }
+            });
+        });
+    });
+  
+    if (body.value) {
+        observer.observe(body.value, {
+            childList: true,
+            subtree: true,
+        });
+    }
+  });
+  
+  onUnmounted(() => {
+    document.removeEventListener('click', handleDocumentClick);
+    if (observer) {
+        observer.disconnect();
+    }
+  });
+  </script>

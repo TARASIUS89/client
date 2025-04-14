@@ -12,9 +12,7 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
-  modules: [
-    '@pinia/nuxt',
-  ],
+  modules: ['@pinia/nuxt', 'nuxt-swiper'],
   // app: {
   //   pageTransition: { name: 'page', mode: 'out-in' }
   // },

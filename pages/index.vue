@@ -1,4 +1,31 @@
 <template>
+   
+   <section>
+      <swiper
+        :slides-per-view="3"
+        :space-between="50"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
+        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
+        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
+        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
+        ...
+      </swiper>
+    </section><section>
+      <swiper
+        :slides-per-view="3"
+        :space-between="50"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
+        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+        ...
+      </swiper>
+    </section>
+    
   <!-- первый блок -->
   <section class="flex flex-col lg:flex-row items-center gap-24">
     <!-- левая сторона -->

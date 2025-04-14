@@ -11,7 +11,76 @@
 .page-leave-active {
   @apply transition-all
 }
+@import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+#markdown pre {
+    @apply bg-amber-100 border border-amber-400 rounded-lg p-5 mx-5
+}
+
+.page-enter-active,
+.page-leave-active {
+  @apply transition-all
+}
+
+.page-enter-from,
+.page-leave-to {
+  @apply  blur-lg translate-y-full;
+}
+
+.markdown h1 {
+  @apply text-4xl font-medium py-1.5;
+}
+
+.markdown h2 {
+  @apply text-3xl font-medium py-1.5;
+}
+
+.markdown h3 {
+  @apply text-2xl font-medium py-1.5;
+}
+
+.markdown p {
+  @apply text-base py-1.5 text-balance;
+}
+
+.markdown ul {
+  @apply list-disc my-1.5 pl-6;
+}
+
+.markdown ol {
+  @apply list-decimal my-1.5 pl-6;
+}
+
+.markdown pre {
+  @apply flex w-full bg-[#32324d] dark:bg-[#393956] cursor-pointer;
+}
+
+.markdown code {
+  @apply inline-flex my-1.5 p-2 text-sm bg-[#32324d] text-white dark:bg-[#393956] cursor-pointer overflow-x-scroll md:overflow-auto rounded-sm text-nowrap;
+}
+
+.markdown table {
+  @apply w-full table-fixed text-sm text-left border-collapse min-w-max;
+}
+
+.markdown thead {
+  @apply bg-gray-800 text-white;
+}
+
+.markdown thead th {
+  @apply px-4 py-2 font-medium overflow-x-scroll;
+}
+
+.markdown tbody {
+  @apply bg-gray-950 divide-y divide-gray-700;
+}
+
+.markdown tbody td {
+  @apply px-4 py-2 text-gray-300 overflow-x-scroll;
+}
 .page-enter-from,
 .page-leave-to {
   @apply  blur-lg translate-y-full
