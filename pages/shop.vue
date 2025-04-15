@@ -85,13 +85,13 @@ const fetchProducts = async () => {
             {
                 id: 1,
                 attributes: {
-                    title: 'Ноутбук MacBook Pro 16"',
-                    description: 'Мощный ноутбук для профессионалов с процессором M2 Pro, 16 ГБ памяти и 512 ГБ SSD',
-                    price: '199 990',
+                    title: 'LEBO GOLD"',
+                    description: 'coffee lebo gold',
+                    price: '111 111',
                     cover: {
                         data: {
                             attributes: {
-                                url: 'https://aquaelle.ru/_sh/22/2285.jpg'
+                                url: 'C:/Users/User/Documents/www/client/public/1233.webp'
                             }
                         }
                     }

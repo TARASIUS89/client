@@ -1,29 +1,22 @@
 <template>
    
    <section>
-      <swiper
-        :slides-per-view="3"
-        :space-between="50"
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
-      >
-        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
-        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
-        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
-        ...
-      </swiper>
-    </section><section>
-      <swiper
-        :slides-per-view="3"
-        :space-between="50"
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
-      >
-        <swiper-slide>C:\Users\User\Documents\www\client\public\all-08_2-2000x931.jpg</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-        ...
-      </swiper>
+    <swiper-container ref="containerRef">
+      <swiper-slide>
+           <img class="h-120 w-full object-cover"
+                src="C:\Users\User\Documents\www\client\public\all-02.jpg">
+         </swiper-slide>
+         <swiper-slide>
+           <img class="h-120 w-full object-cover"
+                src="C:\Users\User\Documents\www\client\public\all-08_2-2000x931 (1).jpg">
+         </swiper-slide>
+         <swiper-slide>
+           <img class="h-120 w-full object-cover"
+                src="C:\Users\User\Documents\www\client\public\ban_briket__-2000x927.jpg">
+         </swiper-slide>
+</swiper-container>
+
+
     </section>
     
   <!-- первый блок -->
