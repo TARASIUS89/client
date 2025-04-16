@@ -15,7 +15,7 @@ export const useIndexStore = defineStore('index', {
     async fetchUserMe() {
       try {
         const token = localStorage.getItem('jwt')
-        const response = await fetch('http://localhost:1337//api/users/me',
+        const response = await fetch('http://localhost:1337/api/users/me',
           {
             method: 'GET',
             headers: {
