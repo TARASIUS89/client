@@ -4,7 +4,7 @@
       <ClientOnly>
         <swiper-container
           ref="containerRef"
-          class="w-full h-120"
+          class="w-full h-130"
           :autoplay="{
             delay: 3000, // Задержка в миллисекундах
             disableOnInteraction: false // Не отключать автопрокрутку при взаимодействии
@@ -21,12 +21,12 @@
       </ClientOnly>
 
       <!-- Go back one slide -->
-      <button @click="handlePrev" class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-600 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="72" height="72" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+      <button @click="handlePrev" class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)"><path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z"></path></svg>
       </button>
       <!-- Go forward one slide -->
-      <button @click="handleNext" class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-600 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="72" height="72" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg>
+      <button @click="handleNext" class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)"><path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z"></path></svg>
       </button>
     </section>
   </div>
@@ -67,7 +67,7 @@
       <article v-for="item in 4">
         <NuxtLink to="/">
           <img class="w-60 h-80 object-cover rounded-xl"
-            src="https://images.unsplash.com/photo-1554629947-334ff61d85dc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&h=1000&q=80"
+            src="C:\Users\User\Documents\www\client\public\1233.webp"
             alt="">
         </NuxtLink>
         <NuxtLink to="/">
@@ -93,18 +93,28 @@ const swiper = ref(null)
 const slides = ref([
     {
         id: 1,
-        url: 'https://avatars.mds.yandex.net/i?id=9871bb490e49701860b34a4f5834bd2e_l-8176266-images-thumbs&n=13',
+        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-07-2-2000x931.jpg',
         alt: 'Slide 1'
     },
     {
         id: 2,
-        url: 'https://cs13.pikabu.ru/post_img/2023/02/11/8/og_og_167612238721281779.jpg',
+        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-02.jpg',
         alt: 'Slide 2'
     },
     {
         id: 3,
-        url: 'https://i.pinimg.com/originals/c5/2f/b0/c52fb0e9de148e812c542414ee46206e.jpg',
+        url: 'https://lebo.ru/wp-content/uploads/2023/02/photo_2023-02-15_18-13-39.jpg',
         alt: 'Slide 3'
+    },
+    {
+        id: 4,
+        url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
+        alt: 'Slide 4'
+    },
+    {
+        id: 5,
+        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-08_2-2000x931.jpg',
+        alt: 'Slide 5'
     }
 ])
 

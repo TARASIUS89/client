@@ -13,8 +13,15 @@ export const useIndexStore = defineStore('index', {
   actions: {
     // получение данных пользователя
     async fetchUserMe() {
+      if (!process.client) return;
+
       try {
         const token = localStorage.getItem('jwt')
+        if (!token) {
+          console.error('Токен не найден')
+          return
+        }
+
         const response = await fetch('http://localhost:1337/api/users/me',
           {
             method: 'GET',
@@ -24,15 +31,25 @@ export const useIndexStore = defineStore('index', {
           }
         )
 
+        if (!response.ok) {
+          throw new Error('Ошибка при получении данных пользователя')
+        }
+
         const data = await response.json();
         this.userMe = data;
       } catch (error) {
-        console.log(error);
+        console.error('Ошибка при получении данных пользователя:', error);
+        if (import.meta.client) {
+          localStorage.removeItem('jwt')
+        }
+        this.userMe = {}
       }
     },
     // выход из профиля
     logout() {
-      localStorage.removeItem('jwt')
+      if (import.meta.client) {
+        localStorage.removeItem('jwt')
+      }
       this.userMe = {}
     },
     
@@ -51,13 +68,15 @@ export const useIndexStore = defineStore('index', {
         });
     
         const data = await response.json();
-        localStorage.setItem('jwt', data.jwt)
+        if (import.meta.client) {
+          localStorage.setItem('jwt', data.jwt)
+        }
         this.userMe = data.user
         if (!response.ok) {
           throw new Error(data.error.message); // Обработка ошибок
         }
       } catch (error) {
-        console.log('Ошибка при авторизации:', error);
+        console.error('Ошибка при авторизации:', error);
       }
     },
     // сохранение профиля
@@ -65,7 +84,7 @@ export const useIndexStore = defineStore('index', {
       this.editProfileToggle = false;
       try {
         this.loader = true;
-        const token = localStorage.getItem('jwt');
+        const token = process.client ? localStorage.getItem('jwt') : null;
         
         const response = await fetch(`http://localhost:1337/api/users/${this.userMe.id}`, {
           method: 'PUT',
