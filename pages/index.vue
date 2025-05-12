@@ -1,32 +1,32 @@
 <template>
-   <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-6">
     <section class="relative">
       <ClientOnly>
-        <swiper-container
-          ref="containerRef"
-          class="w-full h-130"
-          :autoplay="{
-            delay: 3000, // Задержка в миллисекундах
-            disableOnInteraction: false // Не отключать автопрокрутку при взаимодействии
-          }"
-        >
-          <swiper-slide
-            v-for="slide in slides"
-            :key="slide.id"
-            class="w-full h-full flex justify-center items-center"
-          >
+        <swiper-container ref="containerRef" class="w-full h-130" :autoplay="{
+          delay: 3000, // Задержка в миллисекундах
+          disableOnInteraction: false // Не отключать автопрокрутку при взаимодействии
+        }">
+          <swiper-slide v-for="slide in slides" :key="slide.id" class="w-full h-full flex justify-center items-center">
             <img :src="slide.url" class="w-full h-full object-cover" />
           </swiper-slide>
         </swiper-container>
       </ClientOnly>
 
       <!-- Go back one slide -->
-      <button @click="handlePrev" class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)"><path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z"></path></svg>
+      <button @click="handlePrev"
+        class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)">
+          <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z">
+          </path>
+        </svg>
       </button>
       <!-- Go forward one slide -->
-      <button @click="handleNext" class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)"><path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z"></path></svg>
+      <button @click="handleNext"
+        class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)">
+          <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z">
+          </path>
+        </svg>
       </button>
     </section>
   </div>
@@ -66,9 +66,7 @@
     <div class="flex justify-between">
       <article v-for="item in 4">
         <NuxtLink to="/">
-          <img class="w-60 h-80 object-cover rounded-xl"
-            src="C:\Users\User\Documents\www\client\public\1233.webp"
-            alt="">
+          <img class="w-60 h-80 object-cover rounded-xl" src="/1233.webp" alt="">
         </NuxtLink>
         <NuxtLink to="/">
           <h3>Название статьи</h3>
@@ -91,31 +89,31 @@ import { useSwiper } from '#imports'
 const containerRef = ref(null)
 const swiper = ref(null)
 const slides = ref([
-    {
-        id: 1,
-        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-07-2-2000x931.jpg',
-        alt: 'Slide 1'
-    },
-    {
-        id: 2,
-        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-02.jpg',
-        alt: 'Slide 2'
-    },
-    {
-        id: 3,
-        url: 'https://lebo.ru/wp-content/uploads/2023/02/photo_2023-02-15_18-13-39.jpg',
-        alt: 'Slide 3'
-    },
-    {
-        id: 4,
-        url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
-        alt: 'Slide 4'
-    },
-    {
-        id: 5,
-        url: 'https://lebo.ru/wp-content/uploads/2021/05/all-08_2-2000x931.jpg',
-        alt: 'Slide 5'
-    }
+  {
+    id: 1,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-07-2-2000x931.jpg',
+    alt: 'Slide 1'
+  },
+  {
+    id: 2,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-02.jpg',
+    alt: 'Slide 2'
+  },
+  {
+    id: 3,
+    url: 'https://lebo.ru/wp-content/uploads/2023/02/photo_2023-02-15_18-13-39.jpg',
+    alt: 'Slide 3'
+  },
+  {
+    id: 4,
+    url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
+    alt: 'Slide 4'
+  },
+  {
+    id: 5,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-08_2-2000x931.jpg',
+    alt: 'Slide 5'
+  }
 ])
 
 onMounted(() => {
