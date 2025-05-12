@@ -18,17 +18,25 @@
           >
             <img :src="slide.url" class="w-full h-full object-cover" />
           </swiper-slide>
+          
         </swiper-container>
       </ClientOnly>
 
       <!-- Кнопки навигации -->
       <button @click="handlePrev"
         class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <!-- SVG стрелка назад -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)">
+          <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z">
+          </path>
+        </svg>
       </button>
+      <!-- Go forward one slide -->
       <button @click="handleNext"
         class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <!-- SVG стрелка вперёд -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)">
+          <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z">
+          </path>
+        </svg>
       </button>
     </section>
 
@@ -87,3 +95,111 @@
     </section>
   </div>
 </template>
+
+<script setup>
+import { useSwiper } from '#imports'
+
+const containerRef = ref(null)
+const swiper = ref(null)
+const slides = ref([
+  {
+    id: 1,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-07-2-2000x931.jpg',
+    alt: 'Slide 1'
+  },
+  {
+    id: 2,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-02.jpg',
+    alt: 'Slide 2'
+  },
+  {
+    id: 3,
+    url: 'https://lebo.ru/wp-content/uploads/2023/02/photo_2023-02-15_18-13-39.jpg',
+    alt: 'Slide 3'
+  },
+  {
+    id: 4,
+    url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
+    alt: 'Slide 4'
+  },
+  {
+    id: 5,
+    url: 'https://lebo.ru/wp-content/uploads/2021/05/all-08_2-2000x931.jpg',
+    alt: 'Slide 5'
+  }
+])
+
+onMounted(() => {
+  swiper.value = useSwiper(containerRef, {
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: false,
+    navigation: false,
+  })
+})
+
+onBeforeUnmount(() => {
+  if (swiper.value?.destroy) {
+    swiper.value.destroy()
+  }
+})
+
+const handlePrev = () => {
+  swiper.value?.prev()
+}
+
+const handleNext = () => {
+  swiper.value?.next()
+}
+
+const posts = ref([])
+const index = useIndexStore();
+
+const fetch = async () => {
+  try {
+    // включаем loader
+    index.loader = true;
+
+    const res = await $fetch('https://lebo-sochi.ru/admin/api/posts?populate=*')
+
+    return posts.value = res.data
+  } catch (error) {
+    console.log(error);
+  } finally {
+    // выключаем loader
+    index.loader = false;
+  }
+}
+
+const seo = ref({})
+const fetchSeo = async () => {
+  try {
+    index.loader = true;
+    const res = await $fetch(`https://lebo-sochi.ru/admin/api/global?populate=*`);
+
+    if (res.data.seo) {
+      seo.value = res.data.seo;
+    }
+
+    useHead({
+      title: `${seo.value.metaTitle} | Секреты Шефа`,
+      meta: [
+        { name: 'description', content: seo.value.metaDescription }
+      ],
+    })
+
+  } catch (error) {
+    console.log(error);
+  } finally {
+    index.loader = false;
+  }
+};
+
+onMounted(() => {
+  fetch()
+  fetchSeo()
+})
+</script>
