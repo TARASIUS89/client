@@ -14,7 +14,7 @@ export const useGlobalStore = defineStore('global', {
   actions: {
     async fetchGlobalSettings() {
       try {
-        const { data } = await useFetch('http://localhost:1337/api/global?populate=*', {
+        const { data } = await useFetch('https://lebo-sochi.ru/admin/api/global?populate=*', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwt') || ''}`
           }
@@ -38,7 +38,7 @@ export const useGlobalStore = defineStore('global', {
           throw new Error('Токен авторизации не найден')
         }
 
-        await useFetch('http://localhost:1337/api/global', {
+        await useFetch('https://lebo-sochi.ru/admin/api/global', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -4,7 +4,7 @@
         <div v-if="posts.length > 0" class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <article v-for="post in posts" :key="post.id" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <NuxtLink :to="`/${post.categories[0]?.slug}/${post.slug}`">
-                    <img class="rounded-t-lg h-44 w-full object-cover" :src="'http://localhost:1337'+post.cover.url" :alt="post.cover.alternativeText" :title="post.cover.caption" />
+                    <img class="rounded-t-lg h-44 w-full object-cover" :src="'https://lebo-sochi.ru/admin'+post.cover.url" :alt="post.cover.alternativeText" :title="post.cover.caption" />
                 </NuxtLink>
                 <div class="inline-flex flex-col gap-3.5 p-5">
                     <NuxtLink :to="`/${post.categories[0]?.slug}/${post.slug}`">
@@ -38,7 +38,7 @@ const fetchPosts = async () => {
         index.loader = true;
 
         // Получаем все категории с подкатегориями
-        const categoryRes = await $fetch(`http://localhost:1337/api/categories?populate=subcategories`);
+        const categoryRes = await $fetch(`https://lebo-sochi.ru/admin/api/categories?populate=subcategories`);
         
         // Ищем категорию или подкатегорию по slug
         let foundCategory = null;
@@ -77,10 +77,10 @@ const fetchPosts = async () => {
         let res;
         if (foundCategory) {
             // Если нашли категорию, получаем посты категории
-            res = await $fetch(`http://localhost:1337/api/posts?populate=*&filters[categories][slug][$eqi]=${category}`);
+            res = await $fetch(`https://lebo-sochi.ru/admin/api/posts?populate=*&filters[categories][slug][$eqi]=${category}`);
         } else if (foundSubcategory) {
             // Если нашли подкатегорию, получаем посты подкатегории
-            res = await $fetch(`http://localhost:1337/api/posts?populate=*&filters[subcategories][slug][$eqi]=${category}`);
+            res = await $fetch(`https://lebo-sochi.ru/admin/api/posts?populate=*&filters[subcategories][slug][$eqi]=${category}`);
         } else {
             // Если ничего не нашли, устанавливаем пустой массив постов
             posts.value = [];

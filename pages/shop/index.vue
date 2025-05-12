@@ -5,7 +5,7 @@
             <article v-for="product in products" :key="product.id" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <div class="relative">
                     <img class="rounded-t-lg h-44 w-full object-cover" 
-                         :src="product.cover?.formats?.medium?.url ? `http://localhost:1337${product.cover.formats.medium.url}` : 'https://aquaelle.ru/_sh/22/2285.jpg'" 
+                         :src="product.cover?.formats?.medium?.url ? `https://lebo-sochi.ru/admin${product.cover.formats.medium.url}` : 'https://aquaelle.ru/_sh/22/2285.jpg'" 
                          :alt="product.name" />
                     <div class="absolute top-2 right-2 bg-[brown]/80 text-white px-2 py-1 rounded text-sm">
                         {{ product.price }} ₽
@@ -46,7 +46,7 @@
                                         <swiper-slide v-for="(image, index) in [selectedProduct.cover, ...selectedProduct.images]" :key="index"
                                             class="w-full h-full flex justify-center items-center"
                                         >
-                                            <img :src="`http://localhost:1337${image.formats.medium.url}`" 
+                                            <img :src="`https://lebo-sochi.ru/admin${image.formats.medium.url}`" 
                                                  :alt="selectedProduct.name" 
                                                  class="w-full h-full object-cover rounded-lg">
                                         </swiper-slide>
@@ -120,7 +120,7 @@ onBeforeUnmount(() => {
 const fetchProducts = async () => {
     try {
         index.loader = true;
-        const res = await $fetch('http://localhost:1337/api/shops?populate=*');
+        const res = await $fetch('https://lebo-sochi.ru/admin/api/shops?populate=*');
         if (res.data) {
             products.value = res.data.map(product => ({
                 ...product,
@@ -155,10 +155,10 @@ const seo = ref({
     keywords: 'магазин, товары, покупки',
     ogTitle: 'Магазин',
     ogDescription: 'Магазин товаров',
-    ogImage: 'http://localhost:1337/uploads/shop_og_image.jpg',
+    ogImage: 'https://lebo-sochi.ru/admin/uploads/shop_og_image.jpg',
     twitterTitle: 'Магазин',
     twitterDescription: 'Магазин товаров',
-    twitterImage: 'http://localhost:1337/uploads/shop_twitter_image.jpg'
+    twitterImage: 'https://lebo-sochi.ru/admin/uploads/shop_twitter_image.jpg'
 });
 
 useHead({

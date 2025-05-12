@@ -210,7 +210,7 @@ const handleClickOutside = (event) => {
 const fetchNavbar = async () => {
     try {
         index.loader = true
-        const res = await $fetch('http://localhost:1337/api/navbars?populate[categories][populate][0]=subcategories&sort=sorf:asc')
+        const res = await $fetch('https://lebo-sochi.ru/admin/api/navbars?populate[categories][populate][0]=subcategories&sort=sorf:asc')
         navbar.value = res.data
     } catch (error) {
         console.log(error)

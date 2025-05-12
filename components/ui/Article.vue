@@ -2,7 +2,7 @@
     <article class="max-w-sm bg-white border border-gray-200 hover:border-blue-500 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 transition-colors">
         <NuxtLink v-if="post?.documentId" :to="`/${post.documentId}`">
             <img class="rounded-t-lg h-44 w-full object-cover" 
-                 :src="post?.cover?.url ? 'http://localhost:1337'+post.cover.url : 'https://via.placeholder.com/300x200'" 
+                 :src="post?.cover?.url ? 'https://lebo-sochi.ru/admin'+post.cover.url : 'https://via.placeholder.com/300x200'" 
                  :alt="post?.cover?.alternativeText || post?.title" 
                  :title="post?.cover?.caption || post?.title" />
         </NuxtLink>

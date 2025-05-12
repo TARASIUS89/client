@@ -17,7 +17,7 @@ const posts = ref([])
 
 const fetch = async (search) => {
     try {
-        const res = await $fetch(`http://localhost:1337/api/posts?filters[$or][0][title][$containsi]=${search}&filters[$or][1][body][$containsi]=${search}&populate=*`)
+        const res = await $fetch(`https://lebo-sochi.ru/admin/api/posts?filters[$or][0][title][$containsi]=${search}&filters[$or][1][body][$containsi]=${search}&populate=*`)
 
         return posts.value = res.data
     } catch (error) {
@@ -38,7 +38,7 @@ const seo = ref({})
 const fetchSeo = async () => {
   try {
     index.loader = true;
-    const res = await $fetch(`http://localhost:1337/api/seatrch?populate=*`);
+    const res = await $fetch(`https://lebo-sochi.ru/admin/api/seatrch?populate=*`);
 
     if (res.data.seo) {
        seo.value = res.data.seo;

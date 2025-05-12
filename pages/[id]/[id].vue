@@ -38,7 +38,7 @@ const fetchPost = async () => {
 
     try {
         index.loader = true
-        const { data, error } = await useFetch(`http://localhost:1337/api/posts?filters[documentId][$eqi]=${id}&populate=*`, {
+        const { data, error } = await useFetch(`https://lebo-sochi.ru/admin/api/posts?filters[documentId][$eqi]=${id}&populate=*`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwt') || ''}`
             }
@@ -80,7 +80,7 @@ const updateViews = async (postId) => {
     if (!postId) return
 
     try {
-        await useFetch(`http://localhost:1337/api/posts/${postId}`, {
+        await useFetch(`https://lebo-sochi.ru/admin/api/posts/${postId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwt') || ''}`

@@ -45,7 +45,7 @@ const newID = ref(0)
 
 const fetchUsers = async () => {
   try {
-    const response = await $fetch('http://localhost:1337/api/users?fields=username&sort=username:desc');
+    const response = await $fetch('https://lebo-sochi.ru/admin/api/users?fields=username&sort=username:desc');
     const lastUser  = response[0];
 
     if (lastUser  && lastUser.username) {
@@ -64,7 +64,7 @@ const registr = async () => {
     await fetchUsers()
 
     if (newID) {
-      const response = await $fetch(`http://localhost:1337/api/auth/local/register`, {
+      const response = await $fetch(`https://lebo-sochi.ru/admin/api/auth/local/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

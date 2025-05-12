@@ -45,7 +45,7 @@ const fetch = async () => {
 
   try {
     index.loader = true
-    const res = await $fetch(`http://localhost:1337/api/posts?filters[slug][$eqi]=${slug}&populate=*`)
+    const res = await $fetch(`https://lebo-sochi.ru/admin/api/posts?filters[slug][$eqi]=${slug}&populate=*`)
     if (res.data && res.data.length > 0) {
       post.value = res.data[0]
       if (post.value) {
@@ -72,7 +72,7 @@ const fetch = async () => {
 
 const updateViews = async (documentId) => {
   try {
-    await $fetch(`http://localhost:1337/api/posts/${documentId}`, {
+    await $fetch(`https://lebo-sochi.ru/admin/api/posts/${documentId}`, {
       method: 'PUT',
       body: {
         data: {

@@ -22,7 +22,7 @@ export const useIndexStore = defineStore('index', {
           return
         }
 
-        const response = await fetch('http://localhost:1337/api/users/me',
+        const response = await fetch('https://lebo-sochi.ru/admin/api/users/me',
           {
             method: 'GET',
             headers: {
@@ -56,7 +56,7 @@ export const useIndexStore = defineStore('index', {
     // авторизация
     async login(loginData) {
       try {
-        const response = await fetch('http://localhost:1337/api/auth/local', {
+        const response = await fetch('https://lebo-sochi.ru/admin/api/auth/local', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json', // Указываем тип контента
@@ -86,7 +86,7 @@ export const useIndexStore = defineStore('index', {
         this.loader = true;
         const token = process.client ? localStorage.getItem('jwt') : null;
         
-        const response = await fetch(`http://localhost:1337/api/users/${this.userMe.id}`, {
+        const response = await fetch(`https://lebo-sochi.ru/admin/api/users/${this.userMe.id}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,

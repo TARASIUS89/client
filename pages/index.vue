@@ -47,7 +47,7 @@
                  :class="index === 0 ? 'row-span-2 h-80 w-3xs' : ''"
                  class="hover:scale-105 transition-transform">
           <NuxtLink :to="`/${post.category?.slug}/${post.slug}`">
-            <img class="object-cover rounded-3xl" :src="'http://localhost:1337' + post.cover.url" :alt="post.cover.alternativeText">
+            <img class="object-cover rounded-3xl" :src="'https://lebo-sochi.ru/admin' + post.cover.url" :alt="post.cover.alternativeText">
           </NuxtLink>
         </article>
       </div>

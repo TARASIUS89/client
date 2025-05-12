@@ -161,7 +161,7 @@
     
     try {
         // Запрашиваем данные статьи с сервера
-        const res = await $fetch(`http://localhost:1337/api/posts?filters[slug][$eqi]=${id}&filters[categories][slug][$eqi]=${category}&populate=*`);
+        const res = await $fetch(`https://lebo-sochi.ru/admin/api/posts?filters[slug][$eqi]=${id}&filters[categories][slug][$eqi]=${category}&populate=*`);
         
         // Проверяем, есть ли данные в ответе
         if (res.data && res.data.length > 0) {
@@ -240,7 +240,7 @@
     try {
       // Сначала пробуем обновить через documentId, так как это работает
       if (post.value.documentId) {
-        const apiPath = `http://localhost:1337/api/posts/${post.value.documentId}`;
+        const apiPath = `https://lebo-sochi.ru/admin/api/posts/${post.value.documentId}`;
         await $fetch(apiPath, {
           method: 'PUT',
           body: {
@@ -253,7 +253,7 @@
       }
       
       // Если documentId нет, пробуем через переданный id
-      const apiPath = `http://localhost:1337/api/posts/${documentId}`;
+      const apiPath = `https://lebo-sochi.ru/admin/api/posts/${documentId}`;
       await $fetch(apiPath, {
         method: 'PUT',
         body: {

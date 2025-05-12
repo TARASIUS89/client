@@ -63,7 +63,7 @@
   
   const updateViews = async (documentId) => {
     try {
-        await $fetch(`https://http://localhost:1337/api/posts/${documentId}`, {
+        await $fetch(`https://https://lebo-sochi.ru/admin/api/posts/${documentId}`, {
             method: 'PUT',
             body: {
                 data: {

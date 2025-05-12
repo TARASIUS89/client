@@ -68,7 +68,7 @@
   // Загрузка навигации
   const fetchNavbar = async () => {
     try {
-      const response = await $fetch('http://localhost:1337/api/navbars?populate[categories][populate][0]=subcategories&sort=sort:asc', {
+      const response = await $fetch('https://lebo-sochi.ru/admin/api/navbars?populate[categories][populate][0]=subcategories&sort=sort:asc', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt')}`
         }

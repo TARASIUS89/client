@@ -14,7 +14,7 @@ const fetch = async () => {
         // включаем loader
         index.loader = true;
 
-        const res = await $fetch('http://localhost:1337/api/posts?populate=*')
+        const res = await $fetch('https://lebo-sochi.ru/admin/api/posts?populate=*')
 
         return posts.value = res.data
     } catch (error) {
@@ -31,7 +31,7 @@ const seo = ref({});
 const fetchSeo = async () => {
   try {
     index.loader = true;
-    const res = await $fetch(`http://localhost:1337/api/blog?populate=*`);
+    const res = await $fetch(`https://lebo-sochi.ru/admin/api/blog?populate=*`);
     if (res.data.seo) {
       seo.value = res.data.seo;
     }
