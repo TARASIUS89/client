@@ -53,27 +53,59 @@
   </section>
 
   <!-- второй блок -->
-  <section class="text-black dark:text-white">
+    <section class="text-black dark:text-white">
     <h2 class="my-1.5 text-3xl font-medium uppercase">Каталог LEBO</h2>
     <nav class="my-3">
       <ul class="flex gap-4">
-        <li v-for="item in 24">
+        <li :keyv-for="index in 24">
           <NuxtLink to="/">LEBO</NuxtLink>
         </li>
       </ul>
     </nav>
     <!-- список популярные статей -->
-    <div class="flex justify-between">
-      <article v-for="item in 4">
-        <NuxtLink to="/">
-          <img class="w-60 h-80 object-cover rounded-xl" src="/1233.webp" alt="">
-        </NuxtLink>
-        <NuxtLink to="/">
-          <h3>Название статьи</h3>
-        </NuxtLink>
-        <NuxtLink to="/">Название категории</NuxtLink>
-      </article>
-    </div>
+    <section>
+  <div class="flex justify-between">
+    <article v-for="item in 4" :key="item">
+      <NuxtLink to="/">
+        <img
+          class="w-60 h-80 object-cover rounded-xl"
+          src="/1233.webp"
+          alt="Описание изображения"
+        />
+      </NuxtLink>
+      <NuxtLink to="/">
+        <h3>Название статьи</h3>
+      </NuxtLink>
+      <NuxtLink to="/">Название категории</NuxtLink>
+    </article>
+  </div>
+</section>
+
+<nav class="my-3">
+  <ul class="flex gap-4">
+    <li v-for="index in 24" :key="index">
+      <NuxtLink to="/">LEBO</NuxtLink>
+    </li>
+  </ul>
+</nav>
+    <!-- список популярные статей -->
+<div class="flex justify-between">
+  <article v-for="item in 4" :key="item" class="group">
+    <NuxtLink to="/" class="block mb-4">
+      <img
+        class="w-60 h-80 object-cover rounded-xl transition-transform group-hover:scale-105"
+        src="/1233.webp"
+        alt="Описание изображения товара или статьи"
+      />
+    </NuxtLink>
+    <NuxtLink to="/" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
+      Название статьи
+    </NuxtLink>
+    <NuxtLink to="/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
+      Название категории
+    </NuxtLink>
+  </article>
+</div>
   </section>
 </template>
 
