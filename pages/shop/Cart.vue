@@ -115,9 +115,16 @@
                     <button
                         @click="checkout"
                         class="w-full mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        :disabled="!isFormValid"
+                        :disabled="!isFormValid || isLoading"
                     >
-                        Оформить заказ
+                        <span v-if="isLoading" class="flex items-center justify-center">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Обработка...
+                        </span>
+                        <span v-else>Оформить заказ</span>
                     </button>
                 </div>
             </div>
@@ -135,6 +142,7 @@ const contactData = ref({
     telegram: ''
 })
 const showSuccessModal = ref(false)
+const isLoading = ref(false)
 
 // Функция обновления корзины
 const updateCart = () => {
@@ -177,6 +185,8 @@ const checkout = async () => {
             return
         }
 
+        isLoading.value = true
+
         // Формируем сообщение
         const message = `
 🛒 Новый заказ:
@@ -216,6 +226,13 @@ ${cart.value.map((item) => `
 
         // Очищаем корзину после успешной отправки
         localStorage.removeItem('cart')
+        updateCart() // Обновляем список товаров в корзине
+        
+        // Очищаем форму
+        contactData.value = {
+            phone: '',
+            telegram: ''
+        }
         
         // Показываем модальное окно успеха
         showSuccessModal.value = true
@@ -223,6 +240,8 @@ ${cart.value.map((item) => `
     } catch (error) {
         console.error('Ошибка при оформлении заказа:', error)
         alert('Произошла ошибка при оформлении заказа. Попробуйте позже.')
+    } finally {
+        isLoading.value = false
     }
 }
 
