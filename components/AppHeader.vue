@@ -55,7 +55,36 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input v-model="search" type="search" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="Поиск...">
+                        <input 
+                            v-model="search" 
+                            type="search" 
+                            id="search-navbar" 
+                            class="block w-64 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" 
+                            placeholder="Поиск товаров..."
+                            @focus="showResults = true"
+                            @blur="setTimeout(() => showResults = false, 200)"
+                        >
+                        <!-- Выпадающие результаты поиска -->
+                        <div v-if="showResults && searchResults.length > 0" 
+                            class="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto z-50">
+                            <div v-for="result in searchResults" :key="result.id" 
+                                class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-0"
+                                @click="selectResult(result)">
+                                <div class="flex items-center space-x-3">
+                                    <img :src="`https://lebo-sochi.ru/admin${result.cover.url}`" 
+                                        :alt="result.name"
+                                        class="w-12 h-12 object-contain bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                            {{ result.name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ formatPrice(result.price) }} ₽
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -72,7 +101,36 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input v-model="search" type="search" id="search-navbar-mobile" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="Поиск...">
+                        <input 
+                            v-model="search" 
+                            type="search" 
+                            id="search-navbar-mobile" 
+                            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" 
+                            placeholder="Поиск товаров..."
+                            @focus="showResults = true"
+                            @blur="setTimeout(() => showResults = false, 200)"
+                        >
+                        <!-- Выпадающие результаты поиска для мобильной версии -->
+                        <div v-if="showResults && searchResults.length > 0" 
+                            class="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto z-50">
+                            <div v-for="result in searchResults" :key="result.id" 
+                                class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-0"
+                                @click="selectResult(result)">
+                                <div class="flex items-center space-x-3">
+                                    <img :src="`https://lebo-sochi.ru/admin${result.cover.url}`" 
+                                        :alt="result.name"
+                                        class="w-12 h-12 object-contain bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                            {{ result.name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ formatPrice(result.price) }} ₽
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- навигация -->
@@ -88,6 +146,8 @@ const index = useIndexStore();
 const search = ref('')
 const router = useRouter();
 const route = useRoute();
+const showResults = ref(false)
+const searchResults = ref([])
 
 // отслеживание состояния меню
 const menuOpen = ref(false)
@@ -100,8 +160,38 @@ const toggleMenu = () => {
     }
 }
 
-// Наблюдаем за изменениями в состоянии поиска
+// Форматирование цены
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('ru-RU').format(price)
+}
+
+// Поиск товаров
+const searchProducts = async (query) => {
+    if (query.length < 2) {
+        searchResults.value = []
+        return
+    }
+
+    try {
+        const response = await fetch(`https://lebo-sochi.ru/admin/api/shops?populate=cover&filters[name][$contains]=${encodeURIComponent(query)}`)
+        const data = await response.json()
+        searchResults.value = data.data
+    } catch (error) {
+        console.error('Ошибка при поиске товаров:', error)
+        searchResults.value = []
+    }
+}
+
+// Выбор результата поиска
+const selectResult = (result) => {
+    router.push(`/shop/${result.id}`)
+    search.value = ''
+    showResults.value = false
+}
+
+// Наблюдаем за изменениями в поиске
 watch(() => search.value, (newSearch) => {
+    searchProducts(newSearch)
     if (route.path != '/search') {
         router.push('/search');
     }

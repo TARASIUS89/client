@@ -28,84 +28,35 @@
             </div>
         </div>
 
-        <!-- Фильтры и товары -->
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Фильтры -->
-            <div class="lg:w-64 space-y-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Фильтры</h2>
-                    
-                    <!-- Сортировка -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Сортировка
-                        </label>
-                        <select
-                            v-model="sortBy"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                        >
-                            <option value="default">По умолчанию</option>
-                            <option value="price_asc">По возрастанию цены</option>
-                            <option value="price_desc">По убыванию цены</option>
-                            <option value="name_asc">По названию (А-Я)</option>
-                            <option value="name_desc">По названию (Я-А)</option>
-                        </select>
-                    </div>
-
-                    <!-- Цена -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Цена
-                        </label>
-                        <div class="flex items-center space-x-2">
-                            <input
-                                type="number"
-                                v-model="priceRange.min"
-                                placeholder="От"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                            />
-                            <span class="text-gray-500 dark:text-gray-400">-</span>
-                            <input
-                                type="number"
-                                v-model="priceRange.max"
-                                placeholder="До"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                            />
-                        </div>
+        <!-- Сетка товаров -->
+        <div class="flex-1">
+            <!-- Загрузка -->
+            <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div v-for="n in 8" :key="n" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 animate-pulse">
+                    <div class="bg-gray-200 dark:bg-gray-700 h-48 rounded-lg mb-4"></div>
+                    <div class="space-y-3">
+                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Сетка товаров -->
-            <div class="flex-1">
-                <!-- Загрузка -->
-                <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <div v-for="n in 8" :key="n" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 animate-pulse">
-                        <div class="bg-gray-200 dark:bg-gray-700 h-48 rounded-lg mb-4"></div>
-                        <div class="space-y-3">
-                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Товары -->
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <UiProduct
+                    v-for="product in filteredProducts"
+                    :key="product.id"
+                    :product="product"
+                />
+            </div>
 
-                <!-- Товары -->
-                <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <UiProduct
-                        v-for="product in filteredProducts"
-                        :key="product.id"
-                        :product="product"
-                    />
-                </div>
-
-                <!-- Нет товаров -->
-                <div v-if="!loading && filteredProducts.length === 0" class="text-center py-12">
-                    <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Товары не найдены</h3>
-                    <p class="text-gray-500 dark:text-gray-400">Попробуйте изменить параметры поиска</p>
-                </div>
+            <!-- Нет товаров -->
+            <div v-if="!loading && filteredProducts.length === 0" class="text-center py-12">
+                <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Товары не найдены</h3>
+                <p class="text-gray-500 dark:text-gray-400">Попробуйте изменить параметры поиска</p>
             </div>
         </div>
     </div>
@@ -115,11 +66,6 @@
 const products = ref([])
 const loading = ref(true)
 const searchQuery = ref('')
-const sortBy = ref('default')
-const priceRange = ref({
-    min: null,
-    max: null
-})
 const cartCount = ref(0)
 
 // Получение количества товаров в корзине
@@ -130,7 +76,7 @@ const updateCartCount = () => {
     }
 }
 
-// Фильтрация и сортировка товаров
+// Фильтрация товаров
 const filteredProducts = computed(() => {
     let result = [...products.value]
 
@@ -140,30 +86,6 @@ const filteredProducts = computed(() => {
         result = result.filter(product => 
             product.name.toLowerCase().includes(query)
         )
-    }
-
-    // Фильтр по цене
-    if (priceRange.value.min) {
-        result = result.filter(product => product.price >= priceRange.value.min)
-    }
-    if (priceRange.value.max) {
-        result = result.filter(product => product.price <= priceRange.value.max)
-    }
-
-    // Сортировка
-    switch (sortBy.value) {
-        case 'price_asc':
-            result.sort((a, b) => a.price - b.price)
-            break
-        case 'price_desc':
-            result.sort((a, b) => b.price - a.price)
-            break
-        case 'name_asc':
-            result.sort((a, b) => a.name.localeCompare(b.name))
-            break
-        case 'name_desc':
-            result.sort((a, b) => b.name.localeCompare(a.name))
-            break
     }
 
     return result
