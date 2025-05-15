@@ -1,81 +1,110 @@
 <template>
-    <div>
-        <h1 class="my-4 text-2xl text-cyan-700 darl:blue-500 font-medium">Магазин</h1>
-        <div v-if="products.length > 0" class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <article v-for="product in products" :key="product.id" class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Заголовок и навигация -->
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-bold dark:text-white">Магазин</h1>
+            <div class="flex items-center space-x-4">
+                <!-- Поиск -->
                 <div class="relative">
-                    <img class="rounded-t-lg h-44 w-full object-cover" 
-                         :src="product.cover?.formats?.medium?.url ? `https://lebo-sochi.ru/admin${product.cover.formats.medium.url}` : 'https://aquaelle.ru/_sh/22/2285.jpg'" 
-                         :alt="product.name" />
-                    <div class="absolute top-2 right-2 bg-[brown]/80 text-white px-2 py-1 rounded text-sm">
-                        {{ product.price }} ₽
-                    </div>
+                    <input
+                        type="text"
+                        v-model="searchQuery"
+                        placeholder="Поиск товаров..."
+                        class="w-64 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-colors"
+                    />
+                    <svg class="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
                 </div>
-                <div class="p-5">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {{ product.name }}
-                    </h5>
-                    <p class="mb-3 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                        {{ product.description }}
-                    </p>
-                    <button @click="selectProduct(product)" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[brown]/80 rounded-lg hover:bg-[brown] focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
-                        Подробнее
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </button>
-                </div>
-            </article>
-        </div>
-        <div v-else class="text-center py-8">
-            <p class="text-lg text-gray-600 dark:text-gray-400">Товаров пока нет</p>
+                <!-- Корзина -->
+                <NuxtLink to="/shop/cart" class="relative inline-flex items-center p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span v-if="cartCount > 0" class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        {{ cartCount }}
+                    </span>
+                </NuxtLink>
+            </div>
         </div>
 
-        <!-- Модальное окно -->
-        <div v-if="isModalOpen && selectedProduct" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full dark:bg-gray-800">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-gray-800">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                                <!-- Слайдер изображений -->
-                                <div class="relative mb-4">
-                                    <swiper-container ref="containerRef" class="w-full h-64">
-                                        <swiper-slide v-for="(image, index) in [selectedProduct.cover, ...selectedProduct.images]" :key="index"
-                                            class="w-full h-full flex justify-center items-center"
-                                        >
-                                            <img :src="`https://lebo-sochi.ru/admin${image.formats.medium.url}`" 
-                                                 :alt="selectedProduct.name" 
-                                                 class="w-full h-full object-cover rounded-lg">
-                                        </swiper-slide>
-                                    </swiper-container>
-                                    <div class="absolute top-2 right-2 bg-[brown]/80 text-white px-3 py-1 rounded text-lg">
-                                        {{ selectedProduct.price }} ₽
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl leading-6 font-medium text-gray-900 dark:text-white mb-2">
-                                    {{ selectedProduct.name }}
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
-                                        {{ selectedProduct.description }}
-                                    </p>
-                                </div>
-                                <div class="mt-4">
-                                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[brown]/80 text-base font-medium text-white hover:bg-[brown] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:text-sm">
-                                        Купить
-                                    </button>
-                                </div>
-                            </div>
+        <!-- Фильтры и товары -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Фильтры -->
+            <div class="lg:w-64 space-y-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Фильтры</h2>
+                    
+                    <!-- Сортировка -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Сортировка
+                        </label>
+                        <select
+                            v-model="sortBy"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        >
+                            <option value="default">По умолчанию</option>
+                            <option value="price_asc">По возрастанию цены</option>
+                            <option value="price_desc">По убыванию цены</option>
+                            <option value="name_asc">По названию (А-Я)</option>
+                            <option value="name_desc">По названию (Я-А)</option>
+                        </select>
+                    </div>
+
+                    <!-- Цена -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Цена
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input
+                                type="number"
+                                v-model="priceRange.min"
+                                placeholder="От"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            />
+                            <span class="text-gray-500 dark:text-gray-400">-</span>
+                            <input
+                                type="number"
+                                v-model="priceRange.max"
+                                placeholder="До"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            />
                         </div>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse dark:bg-gray-700">
-                        <button type="button" @click="closeModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-600 dark:text-white dark:border-gray-500 dark:hover:bg-gray-500">
-                            Закрыть
-                        </button>
+                </div>
+            </div>
+
+            <!-- Сетка товаров -->
+            <div class="flex-1">
+                <!-- Загрузка -->
+                <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div v-for="n in 8" :key="n" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 animate-pulse">
+                        <div class="bg-gray-200 dark:bg-gray-700 h-48 rounded-lg mb-4"></div>
+                        <div class="space-y-3">
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Товары -->
+                <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <UiProduct
+                        v-for="product in filteredProducts"
+                        :key="product.id"
+                        :product="product"
+                    />
+                </div>
+
+                <!-- Нет товаров -->
+                <div v-if="!loading && filteredProducts.length === 0" class="text-center py-12">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Товары не найдены</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Попробуйте изменить параметры поиска</p>
                 </div>
             </div>
         </div>
@@ -83,97 +112,87 @@
 </template>
 
 <script setup>
-import { useSwiper } from '#imports'
-
-const index = useIndexStore();
-const products = ref([]);
-const isModalOpen = ref(false);
-const selectedProduct = ref(null);
-const containerRef = ref(null);
-const swiper = ref(null);
-
-onMounted(() => {
-    swiper.value = useSwiper(containerRef, {
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-            waitForTransition: true,
-        },
-        speed: 800,
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true
-        },
-        pagination: false,
-        navigation: false,
-    })
+const products = ref([])
+const loading = ref(true)
+const searchQuery = ref('')
+const sortBy = ref('default')
+const priceRange = ref({
+    min: null,
+    max: null
 })
+const cartCount = ref(0)
 
-onBeforeUnmount(() => {
-    if (swiper.value?.destroy) {
-        swiper.value.destroy()
+// Получение количества товаров в корзине
+const updateCartCount = () => {
+    if (process.client) {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+        cartCount.value = cart.length
     }
+}
+
+// Фильтрация и сортировка товаров
+const filteredProducts = computed(() => {
+    let result = [...products.value]
+
+    // Поиск
+    if (searchQuery.value) {
+        const query = searchQuery.value.toLowerCase()
+        result = result.filter(product => 
+            product.name.toLowerCase().includes(query)
+        )
+    }
+
+    // Фильтр по цене
+    if (priceRange.value.min) {
+        result = result.filter(product => product.price >= priceRange.value.min)
+    }
+    if (priceRange.value.max) {
+        result = result.filter(product => product.price <= priceRange.value.max)
+    }
+
+    // Сортировка
+    switch (sortBy.value) {
+        case 'price_asc':
+            result.sort((a, b) => a.price - b.price)
+            break
+        case 'price_desc':
+            result.sort((a, b) => b.price - a.price)
+            break
+        case 'name_asc':
+            result.sort((a, b) => a.name.localeCompare(b.name))
+            break
+        case 'name_desc':
+            result.sort((a, b) => b.name.localeCompare(a.name))
+            break
+    }
+
+    return result
 })
 
 const fetchProducts = async () => {
     try {
-        index.loader = true;
-        const res = await $fetch('https://lebo-sochi.ru/admin/api/shops?populate=*');
-        if (res.data) {
-            products.value = res.data.map(product => ({
-                ...product,
-                images: product.images || []
-            }));
-        }
+        loading.value = true
+        const response = await fetch('https://lebo-sochi.ru/admin/api/shops?populate=cover')
+        const data = await response.json()
+        products.value = data.data
     } catch (error) {
-        console.error('Ошибка при загрузке товаров:', error);
+        console.error('Ошибка при получении продуктов:', error)
     } finally {
-        index.loader = false;
+        loading.value = false
     }
 }
 
-const selectProduct = (product) => {
-    if (!product) return;
-    selectedProduct.value = {
-        ...product,
-        images: product.images || []
-    };
-    isModalOpen.value = true;
-}
+onMounted(() => {
+    fetchProducts()
+    updateCartCount()
 
-const closeModal = () => {
-    isModalOpen.value = false;
-    selectedProduct.value = null;
-}
-
-// SEO
-const seo = ref({
-    title: 'Магазин',
-    description: 'Магазин товаров',
-    keywords: 'магазин, товары, покупки',
-    ogTitle: 'Магазин',
-    ogDescription: 'Магазин товаров',
-    ogImage: 'https://lebo-sochi.ru/admin/uploads/shop_og_image.jpg',
-    twitterTitle: 'Магазин',
-    twitterDescription: 'Магазин товаров',
-    twitterImage: 'https://lebo-sochi.ru/admin/uploads/shop_twitter_image.jpg'
-});
-
-useHead({
-    title: seo.value.title,
-    meta: [
-        { name: 'description', content: seo.value.description },
-        { name: 'keywords', content: seo.value.keywords },
-        { property: 'og:title', content: seo.value.ogTitle },
-        { property: 'og:description', content: seo.value.ogDescription },
-        { property: 'og:image', content: seo.value.ogImage },
-        { name: 'twitter:title', content: seo.value.twitterTitle },
-        { name: 'twitter:description', content: seo.value.twitterDescription },
-        { name: 'twitter:image', content: seo.value.twitterImage }
-    ]
+    // Слушаем изменения в корзине
+    if (process.client) {
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'cart') {
+                updateCartCount()
+            }
+        })
+    }
 })
-
-onMounted(() => fetchProducts())
 </script>
