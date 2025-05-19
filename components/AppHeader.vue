@@ -27,6 +27,15 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </button>
+                    <!-- Кнопка корзины для мобильной версии -->
+                    <NuxtLink to="/shop/cart" class="relative text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                        <span v-if="cartItemsCount > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                            {{ cartItemsCount }}
+                        </span>
+                    </NuxtLink>
                     <UiDarkToggle />
                     <UiProfile />
                     <button @click="toggleMenu" type="button" class="inline-flex items-center p-2 size-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -49,6 +58,15 @@
                     </a>
                     <UiDarkToggle />
                     <UiProfile />
+                    <!-- Кнопка корзины для десктопной версии -->
+                    <NuxtLink to="/shop/cart" class="relative text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                        <span v-if="cartItemsCount > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                            {{ cartItemsCount }}
+                        </span>
+                    </NuxtLink>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -148,6 +166,7 @@ const router = useRouter();
 const route = useRoute();
 const showResults = ref(false)
 const searchResults = ref([])
+const cartItemsCount = ref(0)
 
 // отслеживание состояния меню
 const menuOpen = ref(false)
@@ -197,4 +216,19 @@ watch(() => search.value, (newSearch) => {
     }
     index.search = newSearch
 });
+
+// Отслеживание состояния корзины
+const updateCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+    cartItemsCount.value = cart.reduce((total, item) => total + item.quantity, 0)
+}
+
+onMounted(() => {
+    updateCartCount()
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'cart') {
+            updateCartCount()
+        }
+    })
+})
 </script>

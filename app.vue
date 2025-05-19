@@ -9,15 +9,15 @@
 const loader = useIndexStore();
 
 useHead({
-  title: 'Секреты Шефа',
+  title: 'LEBO',
   bodyAttrs: {
     class: 'bg-white dark:bg-gray-900'
   },
 })
 
 useSeoMeta({
-  title: 'Секреты Шефа',
-  ogTitle: 'Секреты Шефа',
+  title: 'LEBO',
+  ogTitle: 'LEBO',
   description: 'Предлагаем простые и вкусные рецепты, советы по выбору ингредиентов и идеи для сервировки',
   ogDescription: 'Предлагаем простые и вкусные рецепты, советы по выбору ингредиентов и идеи для сервировки',
   ogImage: '~/public/prew.jpg',

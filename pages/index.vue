@@ -185,7 +185,7 @@ const fetchSeo = async () => {
     }
 
     useHead({
-      title: `${seo.value.metaTitle} | Секреты Шефа`,
+      title: `${seo.value.metaTitle} | LEBO`,
       meta: [
         { name: 'description', content: seo.value.metaDescription }
       ],
