@@ -36,11 +36,6 @@
                             <li>
                                 <NuxtLink to="/shop" class="hover:underline">Все товары</NuxtLink>
                             </li>
-                            
-                            
-                            <li>
-                                
-                            </li>
                         </ul>
                     </div>
 
@@ -110,25 +105,15 @@
 const token = '7605231803:AAHesk57rNvu8VcHGugwZbWqv_RzttfbQqI';
 const chatId = "160236196";
 
-// Функция для отправки сообщения в Telegram
 const sendTelegramMessage = async (message) => {
     try {
         const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'HTML'
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'HTML' })
         });
         
-        if (!response.ok) {
-            throw new Error('Ошибка отправки сообщения');
-        }
-        
+        if (!response.ok) throw new Error('Ошибка отправки сообщения');
         return await response.json();
     } catch (error) {
         console.error('Ошибка при отправке сообщения в Telegram:', error);
@@ -136,7 +121,6 @@ const sendTelegramMessage = async (message) => {
     }
 };
 
-// Обработчик клика по иконке телеграма
 const handleTelegramClick = async () => {
     try {
         await sendTelegramMessage('Новый посетитель на сайте!');
