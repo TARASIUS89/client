@@ -34,7 +34,7 @@
                     <span class="text-xs text-gray-600 dark:text-gray-400 mr-2">Кол-во:</span>
                     <div class="flex items-center border border-gray-300/10 dark:border-gray-600/10 rounded-lg overflow-hidden bg-white/10 dark:bg-gray-700/10 backdrop-blur-xl">
                         <button 
-                            @click="decrementQuantity" 
+                            @click="updateQuantity(quantity - 1)" 
                             class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100/10 dark:hover:bg-gray-700/10 transition-colors duration-200"
                             :disabled="quantity <= 1"
                             :class="{'opacity-50 cursor-not-allowed': quantity <= 1}"
@@ -43,9 +43,15 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                             </svg>
                         </button>
-                        <span class="w-8 text-center py-1 text-gray-900 dark:text-white font-medium text-sm">{{ quantity }}</span>
+                        <input
+                            type="number"
+                            v-model.number="quantity"
+                            @input="handleQuantityInput"
+                            min="1"
+                            class="w-12 text-center py-1 text-gray-900 dark:text-white font-medium text-sm bg-transparent border-0 focus:ring-0 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        />
                         <button 
-                            @click="incrementQuantity" 
+                            @click="updateQuantity(quantity + 1)" 
                             class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100/10 dark:hover:bg-gray-700/10 transition-colors duration-200"
                         >
                             <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,15 +101,23 @@ const isInCart = computed(() => cartStore.isInCart(props.product.id))
 // Получаем текущее количество товара в корзине
 const cartQuantity = computed(() => cartStore.getItemQuantity(props.product.id))
 
-// Увеличить количество
-const incrementQuantity = () => {
-    quantity.value++
+// Обработка ручного ввода количества
+const handleQuantityInput = (event) => {
+    let value = parseInt(event.target.value)
+    if (isNaN(value) || value < 1) {
+        value = 1
+    }
+    updateQuantity(value)
 }
 
-// Уменьшить количество
-const decrementQuantity = () => {
-    if (quantity.value > 1) {
-        quantity.value--
+// Обновление количества товара
+const updateQuantity = (newQuantity) => {
+    if (newQuantity < 1) return
+    quantity.value = newQuantity
+    
+    // Если товар уже в корзине, обновляем его количество
+    if (isInCart.value) {
+        cartStore.updateQuantity(props.product.id, newQuantity)
     }
 }
 
@@ -115,7 +129,6 @@ const formatPrice = (price) => {
 // Добавление товара в корзину
 const addToCart = () => {
     cartStore.addToCart(props.product, quantity.value)
-    quantity.value = 1 // Сбрасываем количество после добавления
 }
 
 // Удаление товара из корзины
@@ -133,3 +146,10 @@ watch(() => props.product.id, () => {
     quantity.value = 1
 })
 </script>
+
+<style scoped>
+/* Скрываем стрелки для Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+</style>
