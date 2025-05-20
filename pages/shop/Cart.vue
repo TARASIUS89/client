@@ -98,7 +98,7 @@
                         </div>
                         <div>
                             <label for="telegram" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Telegram
+                                Названия организации
                             </label>
                             <input
                                 type="text"
@@ -136,7 +136,9 @@
 </template>
 
 <script setup>
-const cart = ref([])
+import { useCartStore } from '~/stores/cart'
+
+const cartStore = useCartStore()
 const contactData = ref({
     phone: '',
     telegram: ''
@@ -144,19 +146,8 @@ const contactData = ref({
 const showSuccessModal = ref(false)
 const isLoading = ref(false)
 
-// Функция обновления корзины
-const updateCart = () => {
-    cart.value = JSON.parse(localStorage.getItem('cart') || '[]')
-}
-
-// Слушаем изменения в localStorage
-if (process.client) {
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'cart') {
-            updateCart()
-        }
-    })
-}
+// Получаем товары из store
+const cart = computed(() => cartStore.items)
 
 // Форматирование цены
 const formatPrice = (price) => {
@@ -164,9 +155,7 @@ const formatPrice = (price) => {
 }
 
 // Подсчет общей суммы
-const total = computed(() => {
-    return cart.value.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-})
+const total = computed(() => cartStore.totalPrice)
 
 // Проверка валидности формы
 const isFormValid = computed(() => {
@@ -174,8 +163,7 @@ const isFormValid = computed(() => {
 })
 
 const removeFromCart = (id) => {
-    cart.value = cart.value.filter((item) => item.id !== id)
-    localStorage.setItem('cart', JSON.stringify(cart.value))
+    cartStore.removeFromCart(id)
 }
 
 const checkout = async () => {
@@ -225,8 +213,7 @@ ${cart.value.map((item) => `
         }
 
         // Очищаем корзину после успешной отправки
-        localStorage.removeItem('cart')
-        updateCart() // Обновляем список товаров в корзине
+        cartStore.clearCart()
         
         // Очищаем форму
         contactData.value = {
@@ -245,7 +232,13 @@ ${cart.value.map((item) => `
     }
 }
 
+// Инициализируем корзину при монтировании компонента
 onMounted(() => {
-    updateCart()
+    cartStore.initCart()
 })
+
+// Слушаем обновления корзины через store
+watch(() => cartStore.items, () => {
+    // Обновление произойдет автоматически благодаря computed свойству
+}, { deep: true })
 </script>

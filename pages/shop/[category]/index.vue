@@ -64,6 +64,7 @@
 
 <script setup>
 import { useCartStore } from '~/stores/cart'
+const { category } = useRoute().params;
 
 const products = ref([])
 const loading = ref(true)
@@ -91,7 +92,7 @@ const filteredProducts = computed(() => {
 const fetchProducts = async () => {
     try {
         loading.value = true
-        const response = await fetch('https://lebo-sochi.ru/admin/api/shops?populate=cover')
+        const response = await fetch(`https://lebo-sochi.ru/admin/api/shops?populate=cover&filters[category][$eq]=${category}`)
         const data = await response.json()
         products.value = data.data
     } catch (error) {

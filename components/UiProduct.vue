@@ -83,9 +83,17 @@
 </template>
 
 <script setup>
+import { useCartStore } from '~/stores/cart'
+
 const props = defineProps({ product: Object })
-const isInCart = ref(false)
+const cartStore = useCartStore()
 const quantity = ref(1)
+
+// Используем computed для проверки наличия товара в корзине
+const isInCart = computed(() => cartStore.isInCart(props.product.id))
+
+// Получаем текущее количество товара в корзине
+const cartQuantity = computed(() => cartStore.getItemQuantity(props.product.id))
 
 // Увеличить количество
 const incrementQuantity = () => {
@@ -104,59 +112,24 @@ const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU').format(price)
 }
 
-// Проверка наличия товара в корзине
-const checkCart = () => {
-    if (process.client) {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-        isInCart.value = cart.some(item => item.id === props.product.id)
-    }
-}
-
 // Добавление товара в корзину
 const addToCart = () => {
-    if (import.meta.client) {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-        const existingProduct = cart.find(item => item.id === props.product.id)
-        
-        if (existingProduct) {
-            existingProduct.quantity += quantity.value
-        } else {
-            cart.push({
-                id: props.product.id,
-                name: props.product.name,
-                price: props.product.price,
-                cover: props.product.cover,
-                quantity: quantity.value
-            })
-        }
-        
-        localStorage.setItem('cart', JSON.stringify(cart))
-        isInCart.value = true
-        // Сбросить количество после добавления
-        quantity.value = 1
-    }
+    cartStore.addToCart(props.product, quantity.value)
+    quantity.value = 1 // Сбрасываем количество после добавления
 }
 
 // Удаление товара из корзины
 const removeFromCart = () => {
-    if (import.meta.client) {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-        const updatedCart = cart.filter(item => item.id !== props.product.id)
-        localStorage.setItem('cart', JSON.stringify(updatedCart))
-        isInCart.value = false
-    }
+    cartStore.removeFromCart(props.product.id)
 }
 
+// Инициализируем корзину при монтировании компонента
 onMounted(() => {
-    checkCart()
+    cartStore.initCart()
 })
 
-// Слушаем изменения в корзине
-if (import.meta.client) {
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'cart') {
-            checkCart()
-        }
-    })
-}
+// Сбрасываем количество при изменении товара
+watch(() => props.product.id, () => {
+    quantity.value = 1
+})
 </script>
