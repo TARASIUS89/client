@@ -118,3 +118,27 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkPosition)
 })
 </script>
+
+<style scoped>
+/* Улучшаем доступность для сенсорных устройств */
+@media (hover: none) {
+  .hover\:bg-gray-100:hover,
+  .hover\:bg-gray-700:hover {
+    background-color: transparent;
+  }
+}
+
+/* Улучшаем фокус для интерактивных элементов */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgb(59 130 246);
+  outline-offset: 2px;
+}
+
+/* Улучшаем доступность для скринридеров */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
