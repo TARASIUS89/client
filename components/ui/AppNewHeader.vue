@@ -12,15 +12,12 @@
             <div class="flex items-center space-x-2">
                 <!-- Кнопка переключения тёмной темы -->
                 <div class="relative">
-                    <!-- Сам переключатель тем -->
                     <button @click="toggleDarkMode" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
                         :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
-                        <!-- Иконка луны/ночного режима -->
                         <svg class="w-5 h-5 text-gray-700 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                         </svg>
                     </button>
-                    <!-- Tooltip (при желании можно заменить/убрать) -->
                     <div v-if="showDarkTooltip"
                         class="absolute right-0 mt-2 w-32 bg-gray-900 text-white text-sm rounded-md px-2 py-1">
                         Toggle dark mode
@@ -36,7 +33,6 @@
                                 d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                         </svg>
                     </button>
-                    <!-- Tooltip статистики -->
                     <div v-if="showStatsTooltip"
                         class="absolute right-0 mt-2 w-32 bg-gray-900 text-white text-sm rounded-md px-2 py-1">
                         View analytics
