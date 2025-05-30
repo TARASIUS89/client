@@ -2,11 +2,26 @@
     <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <nav class="max-w-screen-xl mx-auto px-4 py-2 flex items-center justify-between">
             <!-- Левая часть: Логотип -->
-            <!-- логотип -->
             <NuxtLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="~/public/favicon.ico" class="h-8" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Coffee Lebo</span>
             </NuxtLink>
+
+            <!-- Центральная часть: Навигация -->
+            <div class="hidden md:flex items-center space-x-6">
+                <NuxtLink to="/shop" class="text-gray-700 dark:text-gray-200 hover:text-yellow-900 dark:hover:text-yellow-500 transition-colors">
+                    Магазин
+                </NuxtLink>
+                <NuxtLink to="/about" class="text-gray-700 dark:text-gray-200 hover:text-yellow-900 dark:hover:text-yellow-500 transition-colors">
+                    О компании
+                </NuxtLink>
+                <NuxtLink to="/delivery" class="text-gray-700 dark:text-gray-200 hover:text-yellow-900 dark:hover:text-yellow-500 transition-colors">
+                    Доставка
+                </NuxtLink>
+                <NuxtLink to="/contacts" class="text-gray-700 dark:text-gray-200 hover:text-yellow-900 dark:hover:text-yellow-500 transition-colors">
+                    Контакты
+                </NuxtLink>
+            </div>
 
             <!-- Правая часть: Кнопки и меню -->
             <div class="flex items-center space-x-2">
@@ -155,35 +170,34 @@
             id="mobile-menu-2">
             <ul class="flex flex-col p-4 space-y-2 text-gray-700 dark:text-gray-200">
                 <li>
-                    <a href="#"
-                        class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-cyan-600 dark:text-cyan-500">
-                        Home
-                    </a>
+                    <NuxtLink to="/" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-cyan-600 dark:text-cyan-500">
+                        Главная
+                    </NuxtLink>
                 </li>
                 <li>
-                    <a href="#" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        Company
-                    </a>
+                    <NuxtLink to="/about" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                        О компании
+                    </NuxtLink>
                 </li>
                 <li>
-                    <a href="#" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        Marketplace
-                    </a>
+                    <NuxtLink to="/shop" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Магазин
+                    </NuxtLink>
                 </li>
                 <li>
-                    <a href="#" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        Features
-                    </a>
+                    <NuxtLink to="/delivery" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Доставка
+                    </NuxtLink>
                 </li>
                 <li>
-                    <a href="#" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        Team
-                    </a>
+                    <NuxtLink to="/payment" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Оплата
+                    </NuxtLink>
                 </li>
                 <li>
-                    <a href="#" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                        Contact
-                    </a>
+                    <NuxtLink to="/contacts" class="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Контакты
+                    </NuxtLink>
                 </li>
             </ul>
         </div>

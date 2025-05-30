@@ -79,18 +79,18 @@
       <!-- Список статей -->
       <div class="flex justify-between">
         <article v-for="item in 4" :key="item" class="group">
-          <NuxtLink to="/" class="block mb-4">
+          <NuxtLink to="/shop" class="block mb-4">
             <img
               class="w-60 h-80 object-cover rounded-xl transition-transform group-hover:scale-105"
               src="/1233.webp"
-              <!-- alt="Описание изображения товара или статьи" -->
-            <!-- /> -->
+              alt="Товары LEBO"
+            />
           </NuxtLink>
-          <NuxtLink to="/" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
-            <!-- Название статьи -->
+          <NuxtLink to="/shop" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
+            <!-- Товары LEBO -->
           </NuxtLink>
-          <NuxtLink to="/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
-            <!-- Название категории -->
+          <NuxtLink to="/shop" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
+            Магазин
           </NuxtLink>
         </article>
       </div>
@@ -121,7 +121,7 @@ const slides = ref([
   },
   {
     id: 4,
-    url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
+    url: 'slide02.jpg',
     alt: 'Slide 4'
   },
   {
