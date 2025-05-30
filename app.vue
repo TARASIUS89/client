@@ -18,8 +18,9 @@ useHead({
 useSeoMeta({
   title: 'LEBO',
   ogTitle: 'LEBO',
-  description: 'Предлагаем простые и вкусные рецепты, советы по выбору ингредиентов и идеи для сервировки',
-  ogDescription: 'Предлагаем простые и вкусные рецепты, советы по выбору ингредиентов и идеи для сервировки',
+  description: ' Кофе лебо,соки Djemka',
+  keywords: 'Кофе лебо,соки Dgemka,кофе Lebo,Lebo,Lebo sochi,лебо сочи,купить лебо сочи,соки концентраты сочи,соки Djemka,Djemka сочи',
+  ogDescription: 'Кофе лебо,соки Djemka',
   ogImage: '~/public/prew.jpg',
 })
 </script>
