@@ -201,7 +201,7 @@
                 seo.value = post.value.seo || {};
                 // Устанавливаем SEO-метаданные для страницы
                 useSeoMeta({
-                    title: `${seo.value.metaTitle || post.value.title} | PlusPixel`,
+                    title: `${seo.value.metaTitle || post.value.title} | lebo-sochi.ru`,
                     description: seo.value.metaDescription || '',
                     ogTitle: seo.value.metaTitle || post.value.title,
                     ogDescription: seo.value.metaDescription || '',

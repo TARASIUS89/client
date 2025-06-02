@@ -59,7 +59,7 @@ const fetchPost = async () => {
             seo.value = post.value.seo || {}
             
             useSeoMeta({
-                title: `${seo.value.metaTitle || post.value.title || 'Пост'} | PlusPixel`,
+                title: `${seo.value.metaTitle || post.value.title || 'Пост'} | lebo-sochi.ru`,
                 description: seo.value.metaDescription || post.value.desc || 'Читайте интересную статью на PlusPixel',
                 ogTitle: seo.value.metaTitle || post.value.title || 'Пост',
                 ogDescription: seo.value.metaDescription || post.value.desc || 'Читайте интересную статью на PlusPixel',

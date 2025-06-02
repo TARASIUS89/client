@@ -46,15 +46,9 @@
                             <li>
                                 <NuxtLink to="/about" class="hover:underline">О компании</NuxtLink>
                             </li>
-                            <li>
-                                <NuxtLink to="/delivery" class="hover:underline">Доставка</NuxtLink>
-                            </li>
-                            <li>
-                                <NuxtLink to="/payment" class="hover:underline">Оплата</NuxtLink>
-                            </li>
-                            <li>
-                                <NuxtLink to="/contacts" class="hover:underline">Контакты</NuxtLink>
-                            </li>
+                            
+                            
+                            
                         </ul>
                     </div>
 

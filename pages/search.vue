@@ -29,7 +29,7 @@ watch( () => index.search, (search) =>{
     fetch(search)
 
     useHead({
-        title: `${search} | PlusPixel`,
+        title: `${search} | lebo-sochi.ru`,
     })
 });
 
