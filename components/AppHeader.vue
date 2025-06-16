@@ -37,16 +37,18 @@
                     <!-- Кнопка корзины для мобильной версии -->
                     <div class="relative">
                         <NuxtLink to="/shop/cart" 
-                            class="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+                            class="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300 p-2 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700 group"
                             aria-label="Корзина">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                            </svg>
-                            <span v-if="cartItemsCount > 0" 
-                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg shadow-red-500/30"
-                                aria-label="Количество товаров в корзине">
-                                {{ cartItemsCount }}
-                            </span>
+                            <div class="relative">
+                                <svg class="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-5deg]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                </svg>
+                                <span v-if="cartItemsCount > 0" 
+                                    class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg shadow-red-500/30 transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 animate-pulse-subtle"
+                                    aria-label="Количество товаров в корзине: {{ cartItemsCount }}">
+                                    {{ cartItemsCount }}
+                                </span>
+                            </div>
                         </NuxtLink>
                     </div>
                     <UiDarkToggle class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-300" />
@@ -65,7 +67,7 @@
                 </div>
 
                 <!-- десктопные элементы -->
-                <div class="hidden lg:flex lg:items-center gap-2 lg:order-2">
+                <div class="hidden lg:flex lg:items-center gap-6 lg:order-2">
                     <a href="https://wa.me/79282947307" target="_blank" rel="noopener noreferrer" 
                         class="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 transition-all duration-300 p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg"
                         aria-label="Написать в WhatsApp">
@@ -74,29 +76,29 @@
                         </svg>
                     </a>
                     <a href="https://t.me/infoLebo" target="_blank" rel="noopener noreferrer" 
-                        class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-all duration-300 p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+                        class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-all duration-300 p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg ml-4"
                         aria-label="Написать в Telegram">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                         </svg>
                     </a>
-                    <UiDarkToggle class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-300" />
+                    <UiDarkToggle class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-300 ml-6" />
                     <!-- Кнопка корзины для десктопной версии -->
-                    <div class="relative">
+                    <div class="relative ml-8">
                         <NuxtLink to="/shop/cart" 
-                            class="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+                            class="relative inline-flex items-center justify-center w-10 h-10 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
                             aria-label="Корзина">
                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                             </svg>
                             <span v-if="cartItemsCount > 0" 
-                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg shadow-red-500/30"
-                                aria-label="Количество товаров в корзине">
+                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-sm"
+                                aria-label="Количество товаров в корзине: {{ cartItemsCount }}">
                                 {{ cartItemsCount }}
                             </span>
                         </NuxtLink>
                     </div>
-                    <div class="relative">
+                    <div class="relative ml-10">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
@@ -275,3 +277,18 @@ watch(() => cartStore.items, () => {
     // Обновление произойдет автоматически благодаря computed свойству
 }, { deep: true })
 </script>
+
+<style scoped>
+.animate-pulse-subtle {
+    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-subtle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+</style>
