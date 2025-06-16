@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col gap-6">
     <!-- Слайдер -->
-    <section class="relative">
+    <section class="relative px-4 md:px-0">
       <ClientOnly>
         <swiper-container
           ref="containerRef"
-          class="w-full h-130"
+          class="w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] xl:h-[500px] rounded-xl overflow-hidden"
           :autoplay="{
             delay: 3000,
             disableOnInteraction: false
@@ -16,24 +16,26 @@
             :key="slide.id"
             class="w-full h-full flex justify-center items-center"
           >
-            <img :src="slide.url" class="w-full h-full object-cover" />
+            <img 
+              :src="slide.url" 
+              class="w-full h-full object-cover object-center" 
+              :alt="slide.alt"
+            />
           </swiper-slide>
-          
         </swiper-container>
       </ClientOnly>
 
       <!-- Кнопки навигации -->
       <button @click="handlePrev"
-        class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)">
+        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10 bg-black/30 hover:bg-black/50">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-6 h-6 md:w-8 md:h-8" fill="rgba(205,228,16,1)">
           <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z">
           </path>
         </svg>
       </button>
-      <!-- Go forward one slide -->
       <button @click="handleNext"
-        class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)">
+        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10 bg-black/30 hover:bg-black/50">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-6 h-6 md:w-8 md:h-8" fill="rgba(241,175,18,1)">
           <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z">
           </path>
         </svg>
@@ -41,28 +43,28 @@
     </section>
 
     <!-- Блок текста и картинок -->
-    <section class="flex flex-col lg:flex-row items-center gap-24">
+    <section class="flex flex-col lg:flex-row items-center gap-8 md:gap-12 lg:gap-24 px-4 md:px-0">
       <!-- Текст -->
-      <div class="flex flex-col gap-4 text-black dark:text-white">
-        <h1 class="text-5xl font-medium uppercase">Наша <span class="text-yellow-900 text-6xl font-bold">"OOO ARABICA" </span> команда</h1>
-        <p class="text-2xl"> успешно сотрудничает с санаториями, отелями, гостиницами, столовыми, магазинами и другими предприятиями сферы услуг. Мы гарантируем профессиональный подход и надежное выполнение обязательств, осуществляя работу на основе официального договора. Доверяя нам, вы выбираете качество, ответственность и индивидуальное внимание к вашим потребностям.</p>
+      <div class="flex flex-col gap-2 md:gap-4 text-black dark:text-white">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-medium uppercase">LEBO <span class="text-yellow-900 text-4xl md:text-5xl lg:text-6xl font-bold">GOLD </span> ARABICA</h1>
+        <p class="text-lg md:text-xl lg:text-2xl">Открой для себя истинную роскош LEBO GOLD. Аромат зёрен Арабики, пикантные нотки черной смородины и молочного шоколада!</p>
       </div>
 
       <!-- Галерея -->
-      <div class="grid grid-cols-2 grid-rows-2 items-center gap-8">
+      <div class="grid grid-cols-2 grid-rows-2 items-center gap-4 md:gap-8">
         <article v-for="(post, index) in posts"
                  :key="post.id"
-                 :class="index === 0 ? 'row-span-2 h-80 w-3xs' : ''"
+                 :class="index === 0 ? 'row-span-2 h-40 md:h-80 w-3xs' : 'h-32 md:h-40'"
                  class="hover:scale-105 transition-transform">
           <NuxtLink :to="`/${post.category?.slug}/${post.slug}`">
-            <img class="object-cover rounded-3xl" :src="'https://lebo-sochi.ru/admin' + post.cover.url" :alt="post.cover.alternativeText">
+            <img class="object-cover rounded-3xl w-full h-full" :src="'https://lebo-sochi.ru/admin' + post.cover.url" :alt="post.cover.alternativeText">
           </NuxtLink>
         </article>
       </div>
     </section>
 
     <!-- Каталог LEBO -->
-    <section class="text-black dark:text-white">
+    <section class="text-black dark:text-white px-4 md:px-0">
       <!-- <h2 class="my-1.5 text-3xl font-medium uppercase">Каталог LEBO</h2> -->
 
       <!-- Меню категорий -->
@@ -75,23 +77,19 @@
       </nav>
 
       <!-- Список статей -->
-      <div class="flex justify-between">
-        <article 
-          v-for="(card, index) in shopCards" 
-          :key="card.id" 
-          class="group"
-        >
-          <NuxtLink :to="card.link" class="block mb-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <article v-for="card in shopCards" :key="card.id" class="group">
+          <NuxtLink :to="card.link" class="block mb-2 md:mb-4">
             <img
-              class="w-60 h-80 object-cover rounded-xl transition-transform group-hover:scale-105"
+              class="w-full h-40 md:h-80 object-cover rounded-xl transition-transform group-hover:scale-105"
               :src="card.image"
               :alt="card.title"
             />
           </NuxtLink>
-          <NuxtLink :to="card.link" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
+          <NuxtLink :to="card.link" class="block mb-1 md:mb-2 text-base md:text-lg font-medium hover:text-yellow-900 transition-colors">
             {{ card.title }}
           </NuxtLink>
-          <NuxtLink :to="card.link" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
+          <NuxtLink :to="card.link" class="text-xs md:text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
             Магазин
           </NuxtLink>
         </article>
