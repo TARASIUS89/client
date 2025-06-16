@@ -4,3 +4,6 @@ Disallow: /
 User-agent: *
 Allow: /index.html
 Allow: /
+
+# Указываем расположение sitemap
+Sitemap: https://ваш-сайт.ru/sitemap.xml

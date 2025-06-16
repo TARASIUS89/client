@@ -6,8 +6,36 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
+  nitro: {
+    routeRules: {
+      '/sitemap.xml': {
+        headers: {
+          'Content-Type': 'application/xml'
+        }
+      }
+    }
+  },
   app: {
     head: {
+      link: [
+        // Стандартный фавикон
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // Для iOS
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        // Для Android
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        // Манифест для PWA
+        { rel: 'manifest', href: '/site.webmanifest' }
+      ],
+      meta: [
+        // Цвет темы для мобильных браузеров
+        { name: 'theme-color', content: '#ffffff' },
+        // Мета-теги для iOS
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
+        { name: 'apple-mobile-web-app-title', content: 'Название вашего сайта' }
+      ],
       script: [
         {
           innerHTML: `
