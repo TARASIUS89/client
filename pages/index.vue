@@ -27,15 +27,15 @@
 
       <!-- Кнопки навигации -->
       <button @click="handlePrev"
-        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10 bg-black/30 hover:bg-black/50">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-6 h-6 md:w-8 md:h-8" fill="rgba(205,228,16,1)">
+        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 group">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-10 h-10 md:w-12 md:h-12 transition-all duration-300 group-hover:scale-110" fill="rgba(255,255,255,0.9)">
           <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z">
           </path>
         </svg>
       </button>
       <button @click="handleNext"
-        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10 bg-black/30 hover:bg-black/50">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-6 h-6 md:w-8 md:h-8" fill="rgba(241,175,18,1)">
+        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 group">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-10 h-10 md:w-12 md:h-12 transition-all duration-300 group-hover:scale-110" fill="rgba(255,255,255,0.9)">
           <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z">
           </path>
         </svg>
@@ -46,8 +46,8 @@
     <section class="flex flex-col lg:flex-row items-center gap-8 md:gap-12 lg:gap-24 px-4 md:px-0">
       <!-- Текст -->
       <div class="flex flex-col gap-2 md:gap-4 text-black dark:text-white">
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-medium uppercase">LEBO <span class="text-yellow-900 text-4xl md:text-5xl lg:text-6xl font-bold">GOLD </span> ARABICA</h1>
-        <p class="text-lg md:text-xl lg:text-2xl">Открой для себя истинную роскош LEBO GOLD. Аромат зёрен Арабики, пикантные нотки черной смородины и молочного шоколада!</p>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-medium uppercase">наша <span class="text-yellow-900 text-4xl md:text-5xl lg:text-6xl font-bold">"ooo ARABICA"</span> команда</h1>
+        <p class="text-lg md:text-xl lg:text-2xl"> успешно сотрудничает с санаториями, отелями, гостиницами, столовыми, магазинами и другими предприятиями сферы услуг. Мы гарантируем профессиональный подход и надежное выполнение обязательств, осуществляя работу на основе официального договора. Доверяя нам, вы выбираете качество, ответственность и индивидуальное внимание к вашим потребностям.</p>
       </div>
 
       <!-- Галерея -->
