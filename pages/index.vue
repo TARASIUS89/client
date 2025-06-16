@@ -5,7 +5,7 @@
       <ClientOnly>
         <swiper-container
           ref="containerRef"
-          class="w-full h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]"
+          class="w-full h-130"
           :autoplay="{
             delay: 3000,
             disableOnInteraction: false
@@ -16,26 +16,24 @@
             :key="slide.id"
             class="w-full h-full flex justify-center items-center"
           >
-            <img 
-              :src="slide.url" 
-              class="w-full h-full object-cover object-center" 
-              :alt="slide.alt"
-            />
+            <img :src="slide.url" class="w-full h-full object-cover" />
           </swiper-slide>
+          
         </swiper-container>
       </ClientOnly>
 
       <!-- Кнопки навигации -->
       <button @click="handlePrev"
-        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-8 h-8 md:w-12 md:h-12" fill="rgba(205,228,16,1)">
+        class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0  33" width="64" height="40" fill="rgba(205,228,16,1)">
           <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z">
           </path>
         </svg>
       </button>
+      <!-- Go forward one slide -->
       <button @click="handleNext"
-        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-1 md:p-2 cursor-pointer z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="w-8 h-8 md:w-12 md:h-12" fill="rgba(241,175,18,1)">
+        class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-2xl hover:text-yellow-950 transition-colors rounded-full p-2 cursor-pointer z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 33" width="64" height="35" fill="rgba(241,175,18,1)">
           <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z">
           </path>
         </svg>
@@ -46,8 +44,8 @@
     <section class="flex flex-col lg:flex-row items-center gap-24">
       <!-- Текст -->
       <div class="flex flex-col gap-4 text-black dark:text-white">
-        <h1 class="text-5xl font-medium uppercase">LEBO <span class="text-yellow-900 text-6xl font-bold">GOLD </span> ARABICA</h1>
-        <p class="text-2xl">Открой для себя истинную роскош LEBO GOLD. Аромат зёрен Арабики, пикантные нотки черной смородины и молочного шоколада!</p>
+        <h1 class="text-5xl font-medium uppercase">Наша <span class="text-yellow-900 text-6xl font-bold">"OOO ARABICA" </span> команда</h1>
+        <p class="text-2xl"> успешно сотрудничает с санаториями, отелями, гостиницами, столовыми, магазинами и другими предприятиями сферы услуг. Мы гарантируем профессиональный подход и надежное выполнение обязательств, осуществляя работу на основе официального договора. Доверяя нам, вы выбираете качество, ответственность и индивидуальное внимание к вашим потребностям.</p>
       </div>
 
       <!-- Галерея -->
@@ -68,28 +66,32 @@
       <!-- <h2 class="my-1.5 text-3xl font-medium uppercase">Каталог LEBO</h2> -->
 
       <!-- Меню категорий -->
-      <!-- <nav class="my-3">
+      <nav class="my-3">
         <ul class="flex gap-4">
           <li v-for="index in 24" :key="index">
-            <NuxtLink to="/">LEBO</NuxtLink>
+            <!-- <NuxtLink to="/">LEBO</NuxtLink> -->
           </li>
         </ul>
-      </nav> -->
+      </nav>
 
       <!-- Список статей -->
       <div class="flex justify-between">
-        <article v-for="item in 4" :key="item" class="group">
-          <NuxtLink to="/shop" class="block mb-4">
+        <article 
+          v-for="(card, index) in shopCards" 
+          :key="card.id" 
+          class="group"
+        >
+          <NuxtLink :to="card.link" class="block mb-4">
             <img
               class="w-60 h-80 object-cover rounded-xl transition-transform group-hover:scale-105"
-              src="/1233.webp"
-              alt="Товары LEBO"
+              :src="card.image"
+              :alt="card.title"
             />
           </NuxtLink>
-          <NuxtLink to="/shop" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
-            <!-- Товары LEBO -->
+          <NuxtLink :to="card.link" class="block mb-2 text-lg font-medium hover:text-yellow-900 transition-colors">
+            {{ card.title }}
           </NuxtLink>
-          <NuxtLink to="/shop" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
+          <NuxtLink :to="card.link" class="text-sm text-gray-600 dark:text-gray-400 hover:text-yellow-900 transition-colors">
             Магазин
           </NuxtLink>
         </article>
@@ -121,7 +123,7 @@ const slides = ref([
   },
   {
     id: 4,
-    url: 'slide02.jpg',
+    url: 'https://lebo.ru/wp-content/uploads/2022/10/espresso_dg_montazhnaya-oblast-1-2000x938.jpg',
     alt: 'Slide 4'
   },
   {
@@ -204,4 +206,32 @@ onMounted(() => {
   fetch()
   fetchSeo()
 })
+
+// Добавляем массив с изображениями для карточек
+const shopCards = ref([
+  {
+    id: 1,
+    image: '/princz-lebo-e1591204264426.png',
+    title: 'Кофе LEBO',
+    link: '/shop'
+  },
+  {
+    id: 2,
+    image: '/terms_mors.png',
+    title: 'Концентраты Djemka',
+    link: '/shop'
+  },
+  {
+    id: 3,
+    image: '/DeMarco_Hot_chocolate_02_GRAN.png',
+    title: 'De Marco Топинг,вайтнер',
+    link: '/shop'
+  },
+  {
+    id: 4,
+    image: 'cpegwmo16zjfjntwrxssk3qpdio73481.png',
+    title: 'Типы чая',
+    link: '/shop'
+  }
+])
 </script>
