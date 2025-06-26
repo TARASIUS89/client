@@ -6,4 +6,4 @@ Allow: /index.html
 Allow: /
 
 # Указываем расположение sitemap
-Sitemap: https://sochi-lebo.ru/sitemap.xml
+Sitemap: https://lebo-sochi.ru/sitemap.xml

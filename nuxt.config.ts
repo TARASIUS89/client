@@ -26,7 +26,8 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         // Манифест для PWA
-        { rel: 'manifest', href: '/site.webmanifest' }
+        { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/myicon.png' },
       ],
       meta: [
         // Цвет темы для мобильных браузеров
